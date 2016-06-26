@@ -1,0 +1,17 @@
+ <%= link_to "Adicionar", new_person_path, remote: true, class: "btn btn-success fields-show-button" %>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Código</th>
+      <th>Nome</th>      
+      <th>Ação</th>      
+    </tr>
+  </thead>
+
+  <tbody id="people">
+    <%= render @people %>
+  </tbody>    
+</table>
+
+<%= render 'composer/dialog' %>

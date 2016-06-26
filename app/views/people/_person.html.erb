@@ -1,0 +1,17 @@
+<tr id="person_<%= person.id %>">
+  <td>
+    <label class="fields-show-view"><%= person.id %></label>
+  </td>
+  <td>
+    <label class="fields-show-view"><%= person.name %></label>
+  </td> 
+  <td>
+    <%= link_to edit_person_path(person), remote: true do %>
+      <button type="button" class="btn btn-primary">Editar</button>
+    <% end %>
+
+    <%= link_to person, remote: true, method: :delete, data: { confirm: "Tem certeza?" } do %>
+      <button type="button" class="btn btn-danger">Remover</button>
+    <% end %>
+  </td>
+</tr>
