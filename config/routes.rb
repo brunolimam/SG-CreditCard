@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  root 'purchases#index'
+
+
   devise_for :users
   resources :people
   resources :purchases do
