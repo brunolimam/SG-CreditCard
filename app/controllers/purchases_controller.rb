@@ -3,7 +3,7 @@ class PurchasesController < ApplicationController
   autocomplete :person, :name, :full => true
 
   def index
-    @purchases = Purchase.all.order(id: :desc)
+    @purchases = Purchase.all.order(purchased_in: :desc)
   end
 
   def new
@@ -44,6 +44,7 @@ class PurchasesController < ApplicationController
 
   def destroy
     @purchase.destroy
+    @purchase.installments.destroy_all
     respond_to do |format|
       format.html { redirect_to purchases_url}
       format.js      

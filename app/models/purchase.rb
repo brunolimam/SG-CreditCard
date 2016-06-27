@@ -2,7 +2,8 @@ class Purchase < ActiveRecord::Base
   has_many :installments
 
   def create_installments(people)
-    @people = Person.where(id: people.map{|x| x[:id]})
+    @people = Person.where(id: people.map{|x| x[:id]}).order(id: :asc)
+    people = people.sort_by { |h| h[:id] }
 
     p_days = []
     p_days << next_day_of_date(self.purchased_in, configatron.close_day_credit_card)

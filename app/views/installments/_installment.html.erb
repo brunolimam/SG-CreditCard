@@ -6,18 +6,20 @@
     <label class="fields-show-view"><%= installment.p_day.strftime("%d/%m %Y") %></label>
   </td>
   <td>
-    <label class="fields-show-view"><%= installment.value %></label>
+    <label class="fields-show-view"><%= number_to_currency(installment.total_value) %></label>
   </td> 
-  <td>
-    <label class="fields-show-view"><%= installment.person.name %></label>
-  </td> 
-  <td>
-    <%= link_to edit_purchase_path(installment), remote: true do %>
-      <button type="button" class="btn btn-primary">Editar</button>
-    <% end %>
 
-    <%= link_to installment, remote: true, method: :delete, data: { confirm: "Tem certeza?" } do %>
-      <button type="button" class="btn btn-danger">Remover</button>
+  <td>
+    <% if installment.person.present? %>
+      <label class="fields-show-view"><%= installment.person.name %></label>
+    <% end %>
+  </td> 
+  <td>
+
+  </td> 
+  <td>
+    <%= link_to installments_path(p_day: installment.p_day) do %>
+      <button type="button" class="btn btn-primary">Visualizar</button>
     <% end %>
   </td>
 </tr>
