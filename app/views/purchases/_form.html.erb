@@ -1,0 +1,58 @@
+<%= javascript_include_tag 'purchase_form' %>
+<%= stylesheet_link_tag 'custom-auto-complete' %>
+
+<div id="error_explanation" class="bg-danger text-danger">
+</div>
+
+<%= form_for(@purchase, remote: true, :html => { :role => "form" }) do |f| %>
+  <div class="row">
+    <div class="col-md-5">    
+     <label class="field">Data</label>
+     <%= f.text_field :purchased_in, :class => "form-control input-md datepicker", "data-provide" => :datepicker, "data-date-format" => "yyyy/mm/dd", :maxlength => 150 %> 
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-5">    
+     <label class="field">Estabelecimento</label>
+     <%= f.text_field :place_name,:class => "form-control input-md",:maxlength => 150 %> 
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-5">    
+      <label class="field">Valor</label>
+    <div class="form-group">
+      <div class="input-group">
+        <div class="input-group-addon">R$</div>
+         <%= f.text_field :value,:class => "form-control input-md",:maxlength => 150 %> 
+      </div>
+    </div>
+
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-5">    
+      <label class="field">Numero de parcelas</label>
+      <br>
+       <%= f.number_field :quantity_installments,:class => "form-control input-md",:maxlength => 150 %> 
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8">    
+      <label class="field">Pessoas que compraram</label>
+      <br>
+      <button id="add-person" type="button" class="btn btn-primary"><i class='glyphicon glyphicon-plus'></i></button>
+      <div id="fields-people">
+      <br>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Salvar", :class=>"btn btn-success" %>
+  </div>
+<% end %>
+

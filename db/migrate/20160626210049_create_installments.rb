@@ -1,8 +1,9 @@
 class CreateInstallments < ActiveRecord::Migration
   def change
     create_table :installments do |t|
-      t.datetime :day_for_pay
+      t.datetime :p_day
       t.float :value
+      t.belongs_to :purchase
       t.belongs_to :person
 
       t.timestamps null: false

@@ -1,0 +1,18 @@
+ <%= link_to "Adicionar", new_purchase_path, remote: true, class: "btn btn-success fields-show-button" %>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Código</th>
+      <th>Data</th>
+      <th>Valor</th>      
+      <th>Pessoa</th>      
+    </tr>
+  </thead>
+
+  <tbody id="installments">
+    <%= render @installments %>
+  </tbody>    
+</table>
+
+<%= render 'composer/dialog' %>

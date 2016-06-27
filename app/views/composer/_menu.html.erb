@@ -19,16 +19,22 @@
     </ul>
     <ul class="nav navbar-nav">
       <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Faturas</a>
+        <a href=<%= purchases_path %> role="button" aria-haspopup="true" aria-expanded="false">Compras</a>
       </li>
     </ul>
            
 
       <ul class="nav navbar-nav">
         <li class="dropdown">
-          <a href=<%= people_path %> class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Pessoas</a>
+          <a href=<%= people_path %> role="button" aria-haspopup="true" aria-expanded="false">Pessoas</a>
         </li>
       </ul>  
+
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href=<%= installments_path %> role="button" aria-haspopup="true" aria-expanded="false">Faturas</a>
+        </li>
+      </ul> 
 
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">

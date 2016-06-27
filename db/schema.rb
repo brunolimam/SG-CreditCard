@@ -17,8 +17,9 @@ ActiveRecord::Schema.define(version: 20160626214242) do
   enable_extension "plpgsql"
 
   create_table "installments", force: :cascade do |t|
-    t.datetime "day_for_pay"
+    t.datetime "p_day"
     t.float    "value"
+    t.integer  "purchase_id"
     t.integer  "person_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
@@ -32,8 +33,11 @@ ActiveRecord::Schema.define(version: 20160626214242) do
 
   create_table "purchases", force: :cascade do |t|
     t.datetime "purchased_in"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.integer  "quantity_installments"
+    t.string   "place_name"
+    t.float    "value"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
   end
 
   create_table "users", force: :cascade do |t|
