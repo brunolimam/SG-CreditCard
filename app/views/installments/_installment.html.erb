@@ -6,7 +6,13 @@
     <label class="fields-show-view"><%= installment.p_day.strftime("%d/%m %Y") %></label>
   </td>
   <td>
-    <label class="fields-show-view"><%= number_to_currency(installment.total_value) %></label>
+    <% if @installments.first.attributes.key?('total_value') == false %>
+      <label class="fields-show-view"><%= installment.purchase.place_name %></label>
+    <% end %>
+  </td>
+  <td>
+    <% value = installment.attributes.key?('total_value') ? installment.total_value : installment.value %>
+    <label class="fields-show-view"><%= number_to_currency(value) %></label>
   </td> 
 
   <td>
@@ -18,8 +24,11 @@
 
   </td> 
   <td>
-    <%= link_to installments_path(p_day: installment.p_day) do %>
-      <button type="button" class="btn btn-primary">Visualizar</button>
+    <% if @installments.first.attributes.key?('total_value') == true %>
+      <% person_id = installment.person.id if installment.person.present? %>
+      <%= link_to installments_path(p_day: installment.p_day, person_id: person_id) do %>
+        <button type="button" class="btn btn-primary">Visualizar</button>
+      <% end %>
     <% end %>
   </td>
 </tr>

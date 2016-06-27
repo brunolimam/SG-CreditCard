@@ -4,6 +4,7 @@
     <tr>
       <th>Código</th>
       <th>Data</th>
+      <th>Estabelecimento</th>      
       <th>Valor</th>      
       <th>Pessoa</th>      
     </tr>
@@ -14,6 +15,9 @@
   </tbody>    
 </table>
 
-<div class="alert alert-info" role="alert">Total: <%= number_to_currency(@installments.map(&:total_value).inject(:+)) %></div>
+<% sum_value =  @installments.first.attributes.key?('total_value') ? @installments.map(&:total_value) : @installments.map(&:value)
+   sum_value = sum_value.inject(:+)
+ %>
+<div class="alert alert-info" role="alert">Total: <%= number_to_currency(sum_value) %></div>
 
 <%= render 'composer/dialog' %>
