@@ -1,13 +1,17 @@
 Rails.application.routes.draw do
-  root 'purchases#index'
+  root 'installments#index'
 
 
   devise_for :users
   resources :people
+  resources :installments, only: :index
+  
   resources :purchases do
-    get :autocomplete_person_name, :on => :collection
+    collection do 
+      get :autocomplete_person_name
+    end
   end
-  resources :installments
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

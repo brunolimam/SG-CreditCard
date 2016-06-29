@@ -2,11 +2,17 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>Código</th>
       <th>Data</th>
-      <th>Estabelecimento</th>      
-      <th>Valor</th>      
-      <th>Pessoa</th>      
+      <% if  @installments.first.present? && !@installments.first.attributes.key?('total_value') %>
+        <th>Estabelecimento</th>
+      <% end %>
+      <% if  @installments.first.present? && @installments.first.attributes.key?('number') %>     
+        <th>Parcela</th> 
+      <% end %>
+      <th>Valor</th>
+      <% if @installments.first.present? && @installments.first.person.present? %> 
+        <th>Pessoa</th>      
+      <% end %>
     </tr>
   </thead>
 
@@ -15,8 +21,10 @@
   </tbody>    
 </table>
 
-<% sum_value =  @installments.first.attributes.key?('total_value') ? @installments.map(&:total_value) : @installments.map(&:value)
-   sum_value = sum_value.inject(:+)
+<% if @installments.first.present?
+    sum_value =  @installments.first.attributes.key?('total_value') ? @installments.map(&:total_value) : @installments.map(&:value)
+    sum_value = sum_value.inject(:+)
+  end
  %>
 <div class="alert alert-info" role="alert">Total: <%= number_to_currency(sum_value) %></div>
 

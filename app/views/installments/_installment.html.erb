@@ -1,34 +1,32 @@
 <tr id="installment_<%= installment.id %>">
   <td>
-    <label class="fields-show-view"><%= installment.id %></label>
-  </td>
-  <td>
     <label class="fields-show-view"><%= installment.p_day.strftime("%d/%m %Y") %></label>
   </td>
-  <td>
-    <% if @installments.first.attributes.key?('total_value') == false %>
+  <% if !@installments.first.attributes.key?('total_value') %>
+    <td>
       <label class="fields-show-view"><%= installment.purchase.place_name %></label>
-    <% end %>
-  </td>
+    </td>
+  <% end %>
+  <% if installment.attributes.key?('number') %>
+    <td>
+      <label class="fields-show-view"><%= "#{installment.number}/#{installment.purchase.quantity_installments}" %></label>
+    </td> 
+  <% end %>
   <td>
     <% value = installment.attributes.key?('total_value') ? installment.total_value : installment.value %>
     <label class="fields-show-view"><%= number_to_currency(value) %></label>
   </td> 
-
-  <td>
-    <% if installment.person.present? %>
+  <% if installment.person.present? %>
+    <td>
       <label class="fields-show-view"><%= installment.person.name %></label>
-    <% end %>
-  </td> 
-  <td>
-
-  </td> 
-  <td>
-    <% if @installments.first.attributes.key?('total_value') == true %>
+    </td>
+  <% end %>
+  <% if @installments.first.attributes.key?('total_value') %>
+    <td>
       <% person_id = installment.person.id if installment.person.present? %>
       <%= link_to installments_path(p_day: installment.p_day, person_id: person_id) do %>
         <button type="button" class="btn btn-primary">Visualizar</button>
       <% end %>
-    <% end %>
-  </td>
+    </td>
+  <% end %>
 </tr>
