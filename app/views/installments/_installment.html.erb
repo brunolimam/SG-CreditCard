@@ -24,7 +24,7 @@
   <% if @installments.first.attributes.key?('total_value') %>
     <td>
       <% person_id = installment.person.id if installment.person.present? %>
-      <%= link_to installments_path(p_day: installment.p_day, person_id: person_id) do %>
+      <%= link_to for_pay_installments_path(p_day: installment.p_day, person_id: person_id) do %>
         <button type="button" class="btn btn-primary">Visualizar</button>
       <% end %>
     </td>
