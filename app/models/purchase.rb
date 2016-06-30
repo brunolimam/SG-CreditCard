@@ -14,7 +14,7 @@ class Purchase < ActiveRecord::Base
 
     @people.each_with_index do |person, index|
       self.quantity_installments.times do |i|
-        Installment.create(person_id: person.id, purchase_id: self.id, value: people[index][:value].to_f/quantity_installments, p_day: p_days[i])
+        Installment.create(person_id: person.id, purchase_id: self.id, number: i+1, value: people[index][:value].to_f/quantity_installments, p_day: p_days[i])
       end
     end
   end
