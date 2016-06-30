@@ -1,3 +1,8 @@
+<% if current_page?(for_pay_installments_path) %>
+  <%= link_to "Ver Anteriores", installments_path, class: "btn btn-success fields-show-button" %>
+<% else %>
+  <%= link_to "Ver Atuais", for_pay_installments_path, class: "btn btn-success fields-show-button" %>
+<% end %>
 
 <table class="table table-striped">
   <thead>

@@ -4,7 +4,11 @@ Rails.application.routes.draw do
 
   devise_for :users
   resources :people
-  resources :installments, only: :index
+  resources :installments, only: :index do
+    collection do
+      get :for_pay
+    end
+  end
   
   resources :purchases do
     collection do 
