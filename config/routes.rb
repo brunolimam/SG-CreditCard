@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root 'installments#index'
+  root 'purchases#index'
 
 
   devise_for :users
@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :purchases do
     collection do 
       get :autocomplete_person_name
+      get :autocomplete_purchase_place_name
     end
   end
 

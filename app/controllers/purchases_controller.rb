@@ -1,6 +1,7 @@
 class PurchasesController < ApplicationController
   before_action :set_purchase, only: [:show, :edit, :update, :destroy]
   autocomplete :person, :name, :full => true
+  autocomplete :purchase, :place_name, :full => true, :uniq => true
 
   def index
     @purchases = Purchase.all.order(purchased_in: :desc)

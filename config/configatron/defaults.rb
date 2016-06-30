@@ -7,3 +7,4 @@
 #   configatron.file.storage = :s3
 
 configatron.close_day_credit_card = 28
+configatron.payment_day_credit_card = 11

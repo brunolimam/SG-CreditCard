@@ -1,6 +1,6 @@
 <tr id="installment_<%= installment.id %>">
   <td>
-    <label class="fields-show-view"><%= installment.p_day.strftime("%d/%m %Y") %></label>
+    <label class="fields-show-view"><%=  l(installment.p_day, format: '%B %Y')  %></label>
   </td>
   <% if !@installments.first.attributes.key?('total_value') %>
     <td>

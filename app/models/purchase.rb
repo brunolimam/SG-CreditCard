@@ -20,13 +20,12 @@ class Purchase < ActiveRecord::Base
   end
 
   private
-    def next_day_of_date(date, number)
-      offset_day = number-date.day
+    def next_day_of_date(date, close_bill_day)
+      offset_day = close_bill_day-date.day
 
-      if offset_day<0
-        date = (date+1.month).beginning_of_month
-      end
-
-      DateTime.parse("#{date.year}/#{date.month}/#{configatron.close_day_credit_card}").utc
+      date = date+1.month
+      date = date+1.month if offset_day<=0
+      
+      DateTime.parse("#{date.year}/#{date.month}/#{configatron.payment_day_credit_card}").utc
     end
 end
