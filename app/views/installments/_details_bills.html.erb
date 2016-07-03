@@ -1,15 +1,28 @@
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Valor</th>
-      <th>Pessoa</th>      
-    </tr>
-  </thead>
-
-  <tbody id="installments">
-    <%= render "detail_installments" %>
-  </tbody>    
-</table>
+<div class="row">
+  <div class="col-md-2">
+    <% prev_disabled = "disabled" if !Installment.has_prev?(@installments.first.p_day) %>
+    <%= link_to details_bills_installments_path(p_day: @installments.first.p_day-1.month),remote: true, :class =>"btn btn-primary #{prev_disabled}"  do %>  
+      <i class="glyphicon glyphicon-circle-arrow-left"></i>
+    <% end %>
+    <% next_disabled = "disabled" if !Installment.has_next?(@installments.first.p_day) %>
+    <%= link_to details_bills_installments_path(p_day: @installments.first.p_day+1.month),remote: true, :class =>"btn btn-primary #{next_disabled}"  do %>  
+      <i class="glyphicon glyphicon-circle-arrow-right"></i>
+    <% end %>
+  </div>  
+  <div class="col-md-10">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Valor</th>
+          <th>Pessoa</th>      
+        </tr>
+      </thead>
+      <tbody id="installments">
+        <%= render "detail_installments" %>
+      </tbody>    
+    </table>
+  </div>
+</div>
 
 <%= render 'total_value' %>
 <%= render 'composer/dialog' %>
