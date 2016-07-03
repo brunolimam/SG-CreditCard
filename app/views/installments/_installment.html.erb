@@ -2,31 +2,11 @@
   <td>
     <label class="fields-show-view"><%=  l(installment.p_day, format: '%B %Y')  %></label>
   </td>
-  <% if !@installments.first.attributes.key?('total_value') %>
-    <td>
-      <label class="fields-show-view"><%= installment.purchase.place_name %></label>
-    </td>
-  <% end %>
-  <% if installment.attributes.key?('number') %>
-    <td>
-      <label class="fields-show-view"><%= "#{installment.number}/#{installment.purchase.quantity_installments}" %></label>
-    </td> 
-  <% end %>
   <td>
     <% value = installment.attributes.key?('total_value') ? installment.total_value : installment.value %>
     <label class="fields-show-view"><%= number_to_currency(value) %></label>
   </td> 
-  <% if installment.person.present? %>
-    <td>
-      <label class="fields-show-view"><%= installment.person.name %></label>
-    </td>
-  <% end %>
-  <% if @installments.first.attributes.key?('total_value') %>
-    <td>
-      <% person_id = installment.person.id if installment.person.present? %>
-      <%= link_to for_pay_installments_path(p_day: installment.p_day, person_id: person_id) do %>
-        <button type="button" class="btn btn-primary">Visualizar</button>
-      <% end %>
-    </td>
-  <% end %>
+  <td>
+    <%= link_to "Visualizar", details_bills_installments_path(p_day: installment.p_day),remote: true, :class =>"btn btn-primary" %>
+  </td>
 </tr>

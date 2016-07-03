@@ -6,7 +6,9 @@ Rails.application.routes.draw do
   resources :people
   resources :installments, only: :index do
     collection do
-      get :for_pay
+      get :bills
+      get :details_bills
+      get :details_bill_per_person
     end
   end
   

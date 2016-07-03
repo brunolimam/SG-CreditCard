@@ -1,20 +1,11 @@
-<%= link_to "Ver Anteriores", installments_path, class: "btn btn-success fields-show-button" if current_page?(for_pay_installments_path) && @installments.first.present? && !@installments.first.person.present? %>
-<%= link_to "Ver Atuais", for_pay_installments_path, class: "btn btn-success fields-show-button" if current_page?(installments_path) %>
+<%= link_to "Ver Anteriores", installments_path, class: "btn btn-success fields-show-button" if current_page?(bills_installments_path) && @installments.first.present? && !@installments.first.person.present? %>
+<%= link_to "Ver Atuais", bills_installments_path, class: "btn btn-success fields-show-button" if current_page?(installments_path) %>
 
 <table class="table table-striped">
   <thead>
     <tr>
       <th>Data</th>
-      <% if  @installments.first.present? && !@installments.first.attributes.key?('total_value') %>
-        <th>Estabelecimento</th>
-      <% end %>
-      <% if  @installments.first.present? && @installments.first.attributes.key?('number') %>     
-        <th>Parcela</th> 
-      <% end %>
       <th>Valor</th>
-      <% if @installments.first.present? && @installments.first.person.present? %> 
-        <th>Pessoa</th>      
-      <% end %>
     </tr>
   </thead>
 
@@ -23,11 +14,5 @@
   </tbody>    
 </table>
 
-<% if @installments.first.present?
-    sum_value =  @installments.first.attributes.key?('total_value') ? @installments.map(&:total_value) : @installments.map(&:value)
-    sum_value = sum_value.inject(:+)
-  end
- %>
-<div class="alert alert-info" role="alert">Total: <%= number_to_currency(sum_value) %></div>
-
+<%= render 'total_value' %>
 <%= render 'composer/dialog' %>

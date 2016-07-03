@@ -3,11 +3,16 @@ class InstallmentsController < ApplicationController
     @installments = Installment.per_month
    end
 
-  def for_pay
+  def bills
     @installments = Installment.per_month.after_date(DateTime.now.utc)
-    @installments = Installment.for_pay_in_date(params[:p_day]).load if params[:p_day].present?
-    @installments = Installment.for_pay_in_date_with_person_id(params[:p_day], params[:person_id]).load if params[:p_day].present? && params[:person_id].present?
-  
     render :index
+  end
+
+  def details_bills
+    @installments = Installment.for_pay_in_date(params[:p_day]).load
+  end
+
+  def details_bill_per_person
+    @installments = Installment.for_pay_in_date_with_person_id(params[:p_day], params[:person_id]).load
   end
 end

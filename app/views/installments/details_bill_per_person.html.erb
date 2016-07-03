@@ -1,0 +1,19 @@
+<h2><%= l(@installments.first.p_day, format: '%B %Y')%>/<%= @installments.first.person.name%></h2>
+<br>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Data</th>
+      <th>Estabelecimento</th>
+      <th>Parcela</th> 
+      <th>Valor</th>
+    </tr>
+  </thead>
+
+  <tbody id="installments">
+    <%= render "detail_bills_person" %>
+  </tbody>    
+</table>
+
+<%= render 'total_value' %>
+<%= render 'composer/dialog' %>

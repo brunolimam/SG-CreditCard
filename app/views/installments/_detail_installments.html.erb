@@ -1,0 +1,14 @@
+<% @installments.each do |installment| %>
+  <tr id="installment_<%= installment.id %>">
+    <td>
+      <% value = installment.attributes.key?('total_value') ? installment.total_value : installment.value %>
+      <label class="fields-show-view"><%= number_to_currency(value) %></label>
+    </td> 
+    <td>
+      <label class="fields-show-view"><%= installment.person.name %></label>
+    </td>
+    <td>
+      <%= link_to "Visualizar", details_bill_per_person_installments_path(p_day: installment.p_day, person_id: installment.person.id), :class =>"btn btn-primary" %>
+    </td>
+  </tr>
+<% end %>
