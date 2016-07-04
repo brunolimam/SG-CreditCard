@@ -1,0 +1,15 @@
+<table class="table table-bordered table-striped table-sm">		
+	<th class="th-field">Parcela</th>
+	<th class="th-field">Pagamento</th>
+	<th class="th-field">Pessoa</th>
+	<th class="th-field">Valor</th>	
+	<% @purchase.installments.each do |pp|%>
+		<tr>
+			<td><%= pp.number %></td>
+			<td><%= l(pp.p_day, format: '%b.%y') %></td>
+			<td><%= Person.find(pp.person_id).name %></td>			
+			<td><%= number_to_currency(pp.value) %></td>
+		</tr>
+	<% end %>	
+</table>
+	

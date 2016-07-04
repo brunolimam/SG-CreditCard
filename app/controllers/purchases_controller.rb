@@ -1,10 +1,13 @@
 class PurchasesController < ApplicationController
-  before_action :set_purchase, only: [:show, :edit, :update, :destroy]
+  before_action :set_purchase, only: [:show, :edit, :update, :destroy, :details]
+  before_action :prepare_purchases, only: [:index]
   autocomplete :person, :name, :full => true
   autocomplete :purchase, :place_name, :full => true, :uniq => true
 
   def index
-    @purchases = Purchase.all.order(purchased_in: :desc)
+  end
+
+  def details   
   end
 
   def new
@@ -56,6 +59,14 @@ class PurchasesController < ApplicationController
   private
     def set_purchase
       @purchase = Purchase.find(params[:id])
+    end
+
+    def prepare_purchases
+      type_search = params[:type_search]
+      search = params[:search]
+      @search = Purchase.all
+      @search = @search.where(type_search+" ILIKE ?", "%"+search+"%") if type_search.present?
+      @purchases = @search.order(purchased_in: :desc)
     end
 
     def purchase_params

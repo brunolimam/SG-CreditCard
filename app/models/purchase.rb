@@ -1,5 +1,6 @@
 class Purchase < ActiveRecord::Base
   has_many :installments
+  has_many :people, through: :installments
 
   def create_installments(people)
     @people = Person.where(id: people.map{|x| x[:id]}).order(id: :asc)

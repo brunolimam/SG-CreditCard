@@ -1,0 +1,9 @@
+$('#dialog h3').html("<%=@purchase.place_name%>");
+
+$('.modal-body').html('<%= j render("details") %>');
+
+$('#dialog').modal("show");
+
+$('#dialog').on('shown.bs.modal', function () {
+  $('.first_input').focus()
+})

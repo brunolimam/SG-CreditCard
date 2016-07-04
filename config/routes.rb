@@ -16,7 +16,13 @@ Rails.application.routes.draw do
     collection do 
       get :autocomplete_person_name
       get :autocomplete_purchase_place_name
+      
     end
+
+    member do
+      get :details
+    end
+    
   end
 
 
