@@ -20,6 +20,10 @@ class Purchase < ActiveRecord::Base
     end
   end
 
+  def value_of_person(person)
+    self.installments.where(person_id: person.id).map(&:value).inject(:+)
+  end
+
   private
     def next_day_of_date(date, close_bill_day)
       offset_day = close_bill_day-date.day

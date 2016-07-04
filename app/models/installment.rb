@@ -2,7 +2,6 @@ class Installment < ActiveRecord::Base
   belongs_to :person
   belongs_to :purchase
 
-
   scope :per_month, -> {
     select(:p_day, "SUM(value) as total_value").group(:p_day).order(:p_day)
   }  

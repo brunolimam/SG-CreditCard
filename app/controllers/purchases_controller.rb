@@ -16,11 +16,10 @@ class PurchasesController < ApplicationController
 
   def create
     @purchase = Purchase.new(purchase_params)
-    @people = params[:people]
 
     respond_to do |format|
       if @purchase.save
-        @purchase.create_installments(@people)
+        @purchase.create_installments(params[:people])
         format.json { head :no_content }
         format.js 
       else        
@@ -38,6 +37,9 @@ class PurchasesController < ApplicationController
   def update
     respond_to do |format|
       if @purchase.update(purchase_params)
+        @purchase.installments.destroy_all
+        @purchase.create_installments(params[:people])
+
         format.json { head :no_content }
         format.js
       else        
