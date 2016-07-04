@@ -6,7 +6,7 @@ class FixPDayFromInstallments < ActiveRecord::Migration
   def self.up
     Installment.all.each do |installment|
       date = installment.p_day
-      date = (date+1.month).change({ day: configatron.payment_day_credit_card })
+      date = (date+1.month).change({ day: Setting.payment_day })
 
       installment.update(p_day: date)
     end

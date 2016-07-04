@@ -7,7 +7,7 @@ class Purchase < ActiveRecord::Base
     people = people.sort_by { |h| h[:id] }
 
     p_days = []
-    p_days << next_day_of_date(self.purchased_in, configatron.close_day_credit_card)
+    p_days << next_day_of_date(self.purchased_in, Setting.closing_day)
 
     (self.quantity_installments-1).times do 
       p_days << p_days.last+1.month
@@ -27,6 +27,6 @@ class Purchase < ActiveRecord::Base
       date = date+1.month
       date = date+1.month if offset_day<=0
       
-      DateTime.parse("#{date.year}/#{date.month}/#{configatron.payment_day_credit_card}").utc
+      DateTime.parse("#{date.year}/#{date.month}/#{Setting.payment_day}").utc
     end
 end

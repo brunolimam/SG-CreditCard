@@ -1,0 +1,7 @@
+      <tr id="setting_<%= setting.id %>">        
+        <td><%= setting.description %></td>
+        <td><%= setting.value %></td>        
+        
+        <td><%= link_to 'Editar', edit_setting_path(setting), remote: true, :class => 'btn btn-sm btn-primary' %></td>        
+      </tr>
+   

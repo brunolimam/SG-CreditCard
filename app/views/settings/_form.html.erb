@@ -1,0 +1,23 @@
+<%= form_for(@setting, remote: true, :html => { :role => "form" }) do |f| %>
+<div id="error_explanation" >
+</div>
+<div class="row">
+  <div class="col-md-5">    
+   <label class="field"><%= @setting.description %></label>
+   </div>
+</div>
+  
+<div class="row"> 
+  <div class="col-md-4">
+    <%= f.text_field :value,:id => @setting.parameter,:class => "form-control input-md" %>
+  </div>
+ </div> 
+  <br>
+<div class="row">
+  <div class="col-md-2">
+  <%= f.submit "Atualizar", :class=>"btn btn-info" %>
+  </div>
+</div>
+<% end %>
+
+
