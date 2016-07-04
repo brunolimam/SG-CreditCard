@@ -10,6 +10,7 @@ class InstallmentsController < ApplicationController
 
   def details_bills
     @installments = Installment.for_pay_in_date(params[:p_day]).load
+    render :details
   end
 
   def details_bill_per_person

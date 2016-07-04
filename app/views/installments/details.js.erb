@@ -1,6 +1,6 @@
 $('#dialog h3').html("<%= l(@installments.first.p_day, format: '%B %Y') %>");
 
-$('.modal-body').html('<%= j render("_details") %>');
+$('.modal-body').html('<%= j render("details") %>');
 
 $('#dialog').modal("show");
 
