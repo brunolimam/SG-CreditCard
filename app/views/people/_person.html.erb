@@ -6,6 +6,12 @@
     <label class="fields-show-view"><%= person.name %></label>
   </td> 
   <td>
+    <label class="fields-show-view"><%= number_to_currency person.installments.map(&:value).inject(:+) %></label>
+  </td>
+  <td>
+    <label class="fields-show-view"><%= number_to_currency person.installments_for_pay.map(&:value).inject(:+) %></label>
+  </td>
+  <td>
     <%= link_to edit_person_path(person), remote: true do %>
       <button type="button" class="btn btn-primary">Editar</button>
     <% end %>
