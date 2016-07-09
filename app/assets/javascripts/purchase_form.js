@@ -12,7 +12,8 @@ $(document).ready(function(){
 
     totalValue = 0;
     for (var i = 0; i < quantityPeople; i++) {
-      totalValue+=document.getElementById('value-person-' + i + '').value;
+      totalValue+=parseFloat(document.getElementById('value-person-' + i + '').value);
+      console.log(totalValue);
     }
 
     var nextValue = valuePurchaseField.value-totalValue;
