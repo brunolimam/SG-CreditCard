@@ -7,7 +7,8 @@ class PurchasesController < ApplicationController
   def index
   end
 
-  def details   
+  def details  
+   #byebug 
   end
 
   def new
