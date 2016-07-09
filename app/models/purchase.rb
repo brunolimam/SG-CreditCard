@@ -3,6 +3,11 @@ class Purchase < ActiveRecord::Base
   has_many :installments
   has_many :people, through: :installments
 
+
+  scope :find_purchaser, ->(search) {
+    joins('INNER JOIN installments i on i.purchase_id = purchases.id').joins('INNER JOIN people pp on i.person_id = pp.id').where("pp.name ILIKE ?", "%"+search+"%").uniq
+  }
+
   def create_installments(people)
     @people = Person.where(id: people.map{|x| x[:id]}).order(id: :asc)
     people = people.sort_by { |h| h[:id] }

@@ -2,7 +2,7 @@
   
   <div class="input-group">
       <%= select_tag "type_search", options_for_select([      
-        ['Estabelecimento', 'place_name']],
+        ['Estabelecimento', 'place_name'],['Pessoa', 'name']],
       selected: params[:type_search]),class: "form-control fields-show-view" %>
       <span class="input-group-btn">
         <%= text_field_tag :search, params[:search], placeholder: "Busca", class: "form-control fields-show-view",autocomplete: "off" %>          

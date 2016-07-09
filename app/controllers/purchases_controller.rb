@@ -66,9 +66,11 @@ class PurchasesController < ApplicationController
     def prepare_purchases
       type_search = params[:type_search]
       search = params[:search]
-      @search = Purchase.all
-      @search = @search.where(type_search+" ILIKE ?", "%"+search+"%") if type_search.present?
-      @purchases = @search.order(purchased_in: :desc)
+      @search = Purchase.all.order(purchased_in: :desc)
+      @search = @search.find_purchaser(search) if type_search == 'name'
+      @search = @search.where(type_search+" ILIKE ?", "%"+search+"%") if type_search.present? and type_search != 'name'
+      @search = @search.search(params[:q])
+      @purchases = @search.result
     end
 
     def purchase_params
