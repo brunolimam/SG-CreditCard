@@ -1,4 +1,5 @@
 class Purchase < ActiveRecord::Base
+  include ActionView::Helpers::NumberHelper
   has_many :installments
   has_many :people, through: :installments
 
@@ -22,6 +23,10 @@ class Purchase < ActiveRecord::Base
 
   def value_of_person(person)
     self.installments.where(person_id: person.id).map(&:value).inject(:+)
+  end
+
+  def payment
+    "#{number_to_currency(value)} em #{quantity_installments}x  de #{number_to_currency(value/quantity_installments)}"
   end
 
   private

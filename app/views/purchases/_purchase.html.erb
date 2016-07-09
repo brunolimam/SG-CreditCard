@@ -12,7 +12,7 @@
     <label class="fields-show-view"><%= number_to_currency(purchase.value) %></label>
   </td> 
   <td>
-    <%= link_to "Visualizar", details_purchase_path(purchase),remote: true, :class =>"btn btn-primary" %>
+    <%= link_to "Visualizar", details_purchase_path(purchase),remote: true, :class =>"btn btn-default" %>
 
     <%= link_to edit_purchase_path(purchase), remote: true do %>
       <button type="button" class="btn btn-primary">Editar</button>
