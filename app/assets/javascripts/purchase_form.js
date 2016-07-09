@@ -11,9 +11,7 @@ $(document).ready(function(){
   addPersonElement.addEventListener('click', function() {
 
     totalValue = 0;
-          console.log('teste');
     for (var i = 0; i < quantityPeople; i++) {
-      console.log('Valor total: value-person-' + i + '');
       totalValue+=document.getElementById('value-person-' + i + '').value;
     }
 
