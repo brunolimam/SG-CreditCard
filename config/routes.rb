@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  get 'report/purchases'
+  get 'report/purchases_by_month'
+  get 'report/purchases_by_person'
+  get 'report/purchases_graphics'
+
   root 'purchases#index'
 
 

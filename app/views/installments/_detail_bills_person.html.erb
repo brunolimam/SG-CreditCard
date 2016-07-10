@@ -1,7 +1,7 @@
 <% @installments.each do |installment| %>
   <tr id="installment_<%= installment.id %>">
     <td>
-      <label class="fields-show-view"><%=  l(installment.purchase.purchased_in, format: '%d.%b.%y')  %></label>
+      <label class="fields-show-view"><%=  l(installment.purchase.purchased_in, format: '%d/%b/%y')  %></label>
     </td>
     <td>
       <label class="fields-show-view"><%= installment.purchase.place_name %></label>

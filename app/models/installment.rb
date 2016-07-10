@@ -18,6 +18,14 @@ class Installment < ActiveRecord::Base
     where(p_day: date, person_id: person_id).includes(:person, :purchase).order("purchases.purchased_in")
   }
 
+  def self.has_prev_for_person? date,person_id
+     Installment.where(p_day: date-1.month, person_id: person_id).size > 0 ? true : false
+  end
+
+  def self.has_next_for_person? date,person_id
+     Installment.where(p_day: date+1.month, person_id: person_id).size > 0 ? true : false
+  end
+
   def self.has_next? date
      Installment.where(p_day: date+1.month).size > 0 ? true : false
   end
