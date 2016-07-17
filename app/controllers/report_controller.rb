@@ -1,28 +1,18 @@
 class ReportController < ApplicationController
-	before_action :set_purchases, only: [:purchases_by_person]
+	before_action :set_purchases, only: [:purchases_by_person,:purchases]
 
   def prepare
   end
 
   def purchases
+    set_pdf_data 'pdf/purchases',@purchases 
   end
 
   def purchases_by_month
   end
 
   def purchases_by_person  
-      
-     html = render_to_string(:action => 'pdf/purchases_by_person', :layout => false)
-     kit = PDFKit.new(html,:footer_right => Time.now.strftime("%d/%m/%Y")+"-"+Time.now.strftime("%H:%M:%S"),:footer_left => '')     
-     kit.stylesheets << "#{Rails.root}/vendor/assets/bootstrap.css"
-     
-      pdf = kit.to_pdf
-      
-      send_data pdf, :filename => Time.zone.today.to_s+'.pdf',
-                :type => "application/pdf",
-                :disposition  => "inline",
-                :data => @purchases
-  
+      set_pdf_data 'pdf/purchases_by_person',@purchases_by_person  
   end
 
   def purchases_graphics
@@ -30,10 +20,31 @@ class ReportController < ApplicationController
   end
 
 
+  def set_pdf_data action,data
+     html = render_to_string(:action => action, :layout => false)
+     kit = PDFKit.new(html,:footer_right => Time.now.strftime("%d/%m/%Y")+"-"+Time.now.strftime("%H:%M:%S"),:footer_left => '',:orientation => 'Landscape')     
+     kit.stylesheets << "#{Rails.root}/vendor/assets/bootstrap.css"
+     
+      pdf = kit.to_pdf
+      
+      send_data pdf, :filename => Time.zone.today.to_s+'.pdf',
+                :type => "application/pdf",
+                :disposition  => "inline",
+                :data => data
+  end
+
+
   private 
 
   def set_purchases
-  	@purchases = Purchase.purchases(params[:person_id])
+
+    sort = params[:sort]
+    order = params[:order]
+
+    
+  	@purchases_by_person = Purchase.purchases(params[:person_id])
+    @purchases = Purchase.order(sort+' '+order).all
+
   end
 
 

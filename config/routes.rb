@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   get 'report/prepare'
-  get 'report/purchases'
+  post 'report/purchases'
   get 'report/purchases_by_month'
   post 'report/purchases_by_person'
   get 'report/purchases_graphics'

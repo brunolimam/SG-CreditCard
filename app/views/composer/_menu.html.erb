@@ -43,10 +43,15 @@
           <ul class="dropdown-menu">
             <li><%= link_to "Gráficos Compras Mensal", report_purchases_graphics_path %></li>   
             <li>
-              <%= link_to report_prepare_path, remote: true do %>
-                  Relatórios <i class="fa fa-file-pdf-o fa-lg" aria-hidden="true"></i>
+              <%= link_to report_prepare_path(:type => 'report_purchases_by_person'), remote: true do %>
+                  Relatório individual <i class="fa fa-file-pdf-o fa-lg" aria-hidden="true"></i>
                 <% end %>
             </li>
+            <li>
+              <%= link_to report_prepare_path(:type => 'report_purchases'), remote: true do %>
+                  Relatório compras <i class="fa fa-file-pdf-o fa-lg" aria-hidden="true"></i>
+                <% end %>
+            </li>            
           </ul>
           
             

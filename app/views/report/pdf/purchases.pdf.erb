@@ -1,11 +1,11 @@
 <center><h2>Relátorio de compras</h2></center>
-<center><h4><%= params[:person] %></h4></center>
 
 
 
 <table class="table table-striped">
 	<thead>
-		<tr>            			
+		<tr>            
+			<th><label class="section">Comprador</label></th>
 			<th><label class="section">Data compra</label></th>
 			<th><label class="section">Primeira parc</label></th>
 			<th><label class="section">Última parc</label></th>
@@ -14,17 +14,20 @@
 			<th><label class="section">Parcs</label></th>   
 		</tr>
 	</thead> 
-	<% @purchases_by_person.each do |purchase| %>
+	<% @purchases.each do |purchase| %>
 		<tr id="purchase_<%= purchase.id %>">  
+		  <td>
+		    <label class="fields-show-view"><%= Person.find(purchase.installments.first.person_id).name %></label>
+		  </td>		
 		  <td>
 		    <label class="fields-show-view"><%= purchase.purchased_in.strftime("%d/%m/%Y") %></label>
 		  </td>
-		<td>
+		  <td>
 		    <label class="fields-show-view"><%= l(purchase.installments.first.p_day,format: '%b/%y') %></label>
 		  </td>		  		  
 		  <td>
 		    <label class="fields-show-view"><%= l(purchase.installments.last.p_day,format: '%b/%y') %></label>
-		  </td>		 
+		  </td>		  
 		  
 		  <td>
 		    <label class="fields-show-view"><%= purchase.place_name %></label>

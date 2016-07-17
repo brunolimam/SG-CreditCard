@@ -1,0 +1,17 @@
+ <div class="row">
+	<div class="col-md-12">    
+	 <label class="field">Ordenar</label>
+	<%= radio_button_tag("sort", "purchased_in",checked = true, options = {} ) %> Data compra
+	<%= radio_button_tag("sort", "place_name", ) %> Estabelecimento
+	<%= radio_button_tag("sort", "value", ) %> Valor
+	<%= radio_button_tag("sort", "quantity_installments", ) %> Parcelas
+	
+	</div>
+</div>	
+ <div class="row">
+	<div class="col-md-4">    
+	 <label class="field">Ordem</label>
+	<%= radio_button_tag("order", "asc",checked = true, options = {} ) %> Ascendente
+	<%= radio_button_tag("order", "desc", ) %> Descendente
+	</div>	
+</div>

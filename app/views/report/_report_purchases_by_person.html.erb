@@ -1,0 +1,15 @@
+<%= form_for '',:html => {:target=>'new_section_frame'}, :url => report_purchases_by_person_path(format: :pdf), :method => :post do |f| %>
+
+<%= hidden_field_tag(:person_id)%>	
+<label class="field">Pessoa</label>
+<div class="form-group">
+<%= autocomplete_field_tag 'person', '', autocomplete_person_name_purchases_path, :size => 75,required: true,:id_element => '#person_id' %>
+</div>   
+
+ <%= render 'order' %>
+ <br>
+ 
+  <div class="actions">
+    <%= f.submit "Criar", :class=>"btn btn-success" %>
+  </div>
+<% end %>
