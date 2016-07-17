@@ -8,6 +8,10 @@ class Purchase < ActiveRecord::Base
     joins('INNER JOIN installments i on i.purchase_id = purchases.id').joins('INNER JOIN people pp on i.person_id = pp.id').where("pp.name ILIKE ?", "%"+search+"%").uniq
   }
 
+  scope :purchases, ->(person_id) {
+    joins('INNER JOIN installments i on i.purchase_id = purchases.id').where("i.person_id = ?", person_id).uniq
+  }
+
   def create_installments(people)
     @people = Person.where(id: people.map{|x| x[:id]}).order(id: :asc)
     people = people.sort_by { |h| h[:id] }

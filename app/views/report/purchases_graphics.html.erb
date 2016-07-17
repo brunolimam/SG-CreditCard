@@ -1,13 +1,59 @@
  <%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
 
 <div class="row">
-    <div class="col-lg-12">
+  <div class="col-lg-12">
     <div class="panel panel-default">
       <div class="panel-heading">
         <i class="fa fa-bar-chart-o fa-fw"></i> Gráfico Mensal
       </div>
-      <%= column_chart @purchases_by_month %> 
+      <%= column_chart @purchases_by_month, library: {colors: ['red', 'blue']}%>
+      
   	</div>
   </div>
+  <div class="col-lg-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-bar-chart-o fa-fw"></i> Gráfico Mensal
+      </div>
+<%= line_chart Purchase.group("purchased_in").sum(:value), {library: {hAxis: {title: "Meses"}, vAxis: {title: "Y"}}} %>
+
+  	</div>
+  </div>  
 </div>  
+
+<script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1.1','packages':['controls']}]}"></script>
+<div id="chart_div" style=""></div>
+
+<script type="text/javascript">
+google.setOnLoadCallback(drawChart);
+
+function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+        ['Descr', 'Downlink'],
+        <% @purchases_by_month.each do |t|%>
+         <%= t %>
+        <% end %> ]);
+
+    var view = new google.visualization.DataView(data);
+
+    view.setColumns([0, //The "descr column"
+    1, //Downlink column
+    {
+        calc: "stringify",
+        sourceColumn: 1, // Create an annotation column with source column "1"
+        type: "string",
+        role: "annotation"
+    }]);
+
+    var columnWrapper = new google.visualization.ChartWrapper({
+        chartType: 'ColumnChart',
+        containerId: 'chart_div',
+        dataTable: view
+    });
+
+    columnWrapper.draw();
+}
+</script>
+
+
 

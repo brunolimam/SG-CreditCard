@@ -1,0 +1,36 @@
+<center><h2>Relátorio de compras</h2></center>
+<center><h4><%= params[:person] %></h4></center>
+
+
+
+<table class="table table-striped">
+	<thead>
+		<tr>            
+			<th><label class="section">Data compra</label></th>
+			<th><label class="section">Última parcela</label></th>
+			<th><label class="section">Estabelecimento</label></th>      
+			<th><label class="section">Valor</label></th>   
+			<th><label class="section">Parcelas</label></th>   
+		</tr>
+	</thead> 
+	<% @purchases.each do |purchase| %>
+		<tr id="purchase_<%= purchase.id %>">  
+		  <td>
+		    <label class="fields-show-view"><%= purchase.purchased_in.strftime("%d/%m/%Y") %></label>
+		  </td>
+			<td>
+		    <label class="fields-show-view"><%= l(purchase.installments.last.p_day,format: '%b/%y') %></label>
+		  </td>		  
+		  
+		  <td>
+		    <label class="fields-show-view"><%= purchase.place_name %></label>
+		  </td> 
+		  <td>
+		    <label class="fields-show-view"><%= number_to_currency(purchase.value) %></label>
+		  </td> 
+		  <td>
+		    <label class="fields-show-view"><%= purchase.quantity_installments %></label>
+		  </td> 
+		</tr>
+	<% end %>
+</table>

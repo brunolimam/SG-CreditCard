@@ -41,8 +41,16 @@
           <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">Relatórios
           <span class="caret"></span></button>
           <ul class="dropdown-menu">
-            <li><%= link_to "Gráficos Compras Mensal", report_purchases_graphics_path %></li>            
+            <li><%= link_to "Gráficos Compras Mensal", report_purchases_graphics_path %></li>   
+            <li>
+              <%= link_to report_prepare_path, remote: true do %>
+                  Relatórios <i class="fa fa-file-pdf-o fa-lg" aria-hidden="true"></i>
+                <% end %>
+            </li>
           </ul>
+          
+            
+          
           </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
