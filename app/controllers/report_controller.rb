@@ -12,7 +12,8 @@ class ReportController < ApplicationController
   end
 
   def purchases_by_person  
-      set_pdf_data 'pdf/purchases_by_person',@purchases_by_person  
+    set_person
+    set_pdf_data 'pdf/purchases_by_person',@purchases_by_person  
   end
 
   def purchases_graphics
@@ -37,15 +38,16 @@ class ReportController < ApplicationController
   private 
 
   def set_purchases
-
     sort = params[:sort]
     order = params[:order]
 
     
   	@purchases_by_person = Purchase.purchases(params[:person_id])
     @purchases = Purchase.order(sort+' '+order).all
-
   end
 
+  def set_person
+    @person = Person.find(params[:person_id])
+  end
 
 end

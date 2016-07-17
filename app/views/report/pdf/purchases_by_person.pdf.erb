@@ -30,7 +30,7 @@
 		    <label class="fields-show-view"><%= purchase.place_name %></label>
 		  </td> 
 		  <td>
-		    <label class="fields-show-view"><%= number_to_currency(purchase.value) %></label>
+		    <label class="fields-show-view"><%= number_to_currency(purchase.value_of_person(@person)) %></label>
 		  </td> 
 		  <td>
 		    <label class="fields-show-view"><%= purchase.quantity_installments %></label>
