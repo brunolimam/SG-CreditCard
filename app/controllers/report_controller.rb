@@ -1,11 +1,15 @@
 class ReportController < ApplicationController
-	before_action :set_purchases, only: [:purchases_by_person,:purchases]
+	before_action :set_purchases, only: [:purchases_person_by_person,:purchases_by_person,:purchases]
 
   def prepare
   end
 
   def purchases
     set_pdf_data 'pdf/purchases',@purchases 
+  end
+
+  def purchases_person_by_person
+    set_pdf_data 'pdf/purchases_person_by_person',@purchases 
   end
 
   def purchases_by_month
@@ -39,11 +43,10 @@ class ReportController < ApplicationController
 
   def set_purchases
     sort = params[:sort]
-    order = params[:order]
-
-    
-  	@purchases_by_person = Purchase.purchases(params[:person_id])
+    order = params[:order]    
+  	
     @purchases = Purchase.order(sort+' '+order).all
+    @purchases_by_person = @purchases.purchases(params[:person_id])
   end
 
   def set_person

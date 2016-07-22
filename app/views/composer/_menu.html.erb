@@ -51,7 +51,12 @@
               <%= link_to report_prepare_path(:type => 'report_purchases'), remote: true do %>
                   Relatório compras <i class="fa fa-file-pdf-o fa-lg" aria-hidden="true"></i>
                 <% end %>
-            </li>            
+            </li>    
+            <li>
+              <%= link_to report_prepare_path(:type => 'report_purchases_person_by_person'), remote: true do %>
+                  Relatório compras por Pessoa <i class="fa fa-file-pdf-o fa-lg" aria-hidden="true"></i>
+                <% end %>
+            </li>  
           </ul>
           
             

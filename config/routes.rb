@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   post 'report/purchases'
   get 'report/purchases_by_month'
   post 'report/purchases_by_person'
+  post 'report/purchases_person_by_person'
   get 'report/purchases_graphics'
 
   root 'purchases#index'
