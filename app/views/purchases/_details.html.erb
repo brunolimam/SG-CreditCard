@@ -1,11 +1,11 @@
-<% @purchase.installments.map(&:person_id).uniq.each do |p| %>
-<h4><i class="glyphicon glyphicon-user"></i> <%= Person.find(p).name %></h4>
+<% @purchase.people.each do |person| %>
+<h4><i class="glyphicon glyphicon-user"></i> <%= person.name %></h4>
 	<table class="table table-bordered table-striped table-sm">		
 		<th class="th-field">Parcela</th>
 		<th class="th-field">Pagamento</th>	
 		<th class="th-field">Valor</th>	
 		<th class="th-field">Totalizador</th>
-		<% @purchase.installments.where('person_id = ?',p).order(:number).each do |pp|%>
+		<% @purchase.installments.where('person_id = ?',person.id).order(:number).each do |pp|%>
 			<tr>
 				<td><%= pp.number %></td>
 				<td><%= l(pp.p_day, format: '%b/%y') %></td>					
