@@ -1,7 +1,7 @@
 class Purchase < ActiveRecord::Base
   include ActionView::Helpers::NumberHelper
   has_many :installments
-  has_many :people, through: :installments
+  has_many :people, through: :installments, uniq: true
 
 
   scope :find_purchaser, ->(search) {

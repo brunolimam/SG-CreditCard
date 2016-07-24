@@ -17,7 +17,7 @@
 		</thead> 
 
 		<% Purchase.purchases(p).each do |purchase| %>
-			<% purchase.people.uniq.each do |person| %>		
+			<% purchase.people.each do |person| %>		
 				<% if person.id == p %>
 					<tr id="purchase_<%= purchase.id %>">  
 					  <td>

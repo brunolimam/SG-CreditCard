@@ -47,7 +47,7 @@
       <button id="add-person" type="button" class="btn btn-primary"><i class='glyphicon glyphicon-plus'></i></button>
       <div id="fields-people">
         <br>
-        <% @purchase.people.uniq.each do |person| %>
+        <% @purchase.people.each do |person| %>
           <div id="fieldset-person-<%= person.id %>">
             <fieldset class="form-inline">
               <input type="text" hidden="true" name=people[][id] value=<%= person.id %>>

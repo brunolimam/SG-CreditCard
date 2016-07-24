@@ -15,7 +15,7 @@
 		</tr>
 	</thead> 
 	<% @purchases.each do |purchase| %>
-		<% purchase.people.uniq.each do |person| %>
+		<% purchase.people.each do |person| %>
 			<tr id="purchase_<%= purchase.id %>">  
 			  <td>
 			    <label class="fields-show-view"><%= person.name %></label>
