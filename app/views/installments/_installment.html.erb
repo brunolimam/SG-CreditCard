@@ -7,6 +7,6 @@
     <label class="fields-show-view"><%= number_to_currency(value) %></label>
   </td> 
   <td>
-    <%= link_to "Visualizar", details_bills_installments_path(p_day: installment.p_day),remote: true, :class =>"btn btn-default" %>
+    <%= link_to "Visualizar", details_bills_installments_path(p_day: installment.p_day, per_person: true),remote: true, :class =>"btn btn-default" %>
   </td>
 </tr>

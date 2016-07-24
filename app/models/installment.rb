@@ -11,6 +11,10 @@ class Installment < ActiveRecord::Base
   }
 
   scope :for_pay_in_date, ->(date) {
+    select("installments.p_day", "installments.person_id", "installments.value", "installments.purchase_id").includes(:person, :purchase).where(p_day: date).order("purchases.purchased_in ASC")    
+  }
+
+  scope :for_pay_in_date_per_person, ->(date) {
     select("installments.p_day", "installments.person_id", "SUM(value) as total_value").includes(:person).group("p_day, person_id").where(p_day: date).order("total_value desc")    
   }
 
