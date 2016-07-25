@@ -1,0 +1,22 @@
+<center><h2>Faturas</h2></center>
+<center><h4><%= @person.name %></h4></center>
+
+<table class="table table-striped">
+	<thead>
+		<tr>            
+			<th><label class="section">Mês</label></th> 
+			<th><label class="section">Valor</label></th>   
+  
+		</tr>
+	</thead> 
+	<% @purchases_values.each do |value| %>		
+			<tr>
+				<td>			 
+					<label class="fields-show-view"><%= value[0] %></label>
+				</td>	
+				<td>
+					<label class="fields-show-view"><%= number_to_currency(value[1]) %></label>
+				</td> 
+			</tr>		
+	<% end %>
+</table>

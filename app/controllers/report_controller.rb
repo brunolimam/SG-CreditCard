@@ -1,5 +1,6 @@
 class ReportController < ApplicationController
 	before_action :set_purchases, only: [:purchases_person_by_person,:purchases_by_person,:purchases]
+  before_action :set_purchases_values, only: [:purchases_values_by_person_in_months]
 
   def prepare
   end
@@ -12,8 +13,12 @@ class ReportController < ApplicationController
     set_pdf_data 'pdf/purchases_person_by_person',@purchases 
   end
 
-  def purchases_by_month
+  def purchases_by_month     
   end
+
+  def purchases_values_by_person_in_months     
+    set_pdf_data 'pdf/purchases_values_by_person_in_months',@purchases_values
+  end  
 
   def purchases_by_person  
     set_person
@@ -21,7 +26,7 @@ class ReportController < ApplicationController
   end
 
   def purchases_graphics
-  	@purchases_by_month = Installment.group_by_month(:p_day, format: "%b/%y").sum(:value)
+  	@purchases_values_by_person_in_months = Installment.group_by_month(:p_day, format: "%b/%y").sum(:value)
   end
 
 
@@ -40,6 +45,10 @@ class ReportController < ApplicationController
 
 
   private 
+  def set_purchases_values
+    set_person
+    @purchases_values = @person.installments.group_by_month(:p_day, format: "%b/%y").sum(:value)
+  end    
 
   def set_purchases
     sort = params[:sort]
