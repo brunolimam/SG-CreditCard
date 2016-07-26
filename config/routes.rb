@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get 'report/purchases_by_month'
   post 'report/purchases_by_person'
   post 'report/purchases_values_by_person_in_months'
+  get 'report/purchases_values_for_persons_in_months'  
   post 'report/purchases_person_by_person'
   get 'report/purchases_graphics'
 

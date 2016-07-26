@@ -1,8 +1,9 @@
-<center><h2>Relátorio de compras</h2></center>
-
-
-<% Person.order(:name).map(&:"id").each do |p| %>
-	<center><h4><%= Person.find(p).name %></h4></center>
+<%= render 'header' %>
+<% Person.order(:name).each do |p| %>
+	<div class="row">
+	<div class="col-md-6"><center><h2><%= p.name %></h2></center></div>
+	<div class="col-md-6"><%= render 'total',:total => p.purchases_total %></div>
+	</div>
 	<table class="table table-striped">
 		<thead>
 			<tr>            
@@ -15,10 +16,9 @@
 				<th><label class="section">Parcs</label></th>   
 			</tr>
 		</thead> 
-
-		<% Purchase.purchases(p).each do |purchase| %>
+		<% Purchase.purchases(p.id).each do |purchase| %>
 			<% purchase.people.each do |person| %>		
-				<% if person.id == p %>
+				<% if person.id == p.id %>
 					<tr id="purchase_<%= purchase.id %>">  
 					  <td>
 					    <label class="fields-show-view"><%= person.name %></label>
@@ -47,6 +47,5 @@
 			<% end %>
 		<% end %>
 	</table>
-	<br>
-	<br>
+	<p class="page-breaker"></p>	
 <%end %>		

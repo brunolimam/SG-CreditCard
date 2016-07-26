@@ -1,6 +1,5 @@
-<center><h2>Faturas</h2></center>
-<center><h4><%= @person.name %></h4></center>
-
+<%= render 'header' %>
+<center><h2><%= @person.name %></h2></center>
 <table class="table table-striped">
 	<thead>
 		<tr>            
@@ -20,3 +19,4 @@
 			</tr>		
 	<% end %>
 </table>
+<%= render 'total',:total => @total %>

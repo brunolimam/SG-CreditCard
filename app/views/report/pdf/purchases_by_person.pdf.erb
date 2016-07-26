@@ -1,7 +1,6 @@
-<center><h2>Relátorio de compras</h2></center>
-<center><h4><%= params[:person] %></h4></center>
+<%= render 'header' %>
 
-
+<center><h2><%= params[:person] %></h2></center>
 
 <table class="table table-striped">
 	<thead>
@@ -14,6 +13,7 @@
 			<th><label class="section">Parcs</label></th>   
 		</tr>
 	</thead> 
+	<% @total = 0 %>
 	<% @purchases_by_person.each do |purchase| %>
 		<tr id="purchase_<%= purchase.id %>">  
 		  <td>
@@ -36,5 +36,8 @@
 		    <label class="fields-show-view"><%= purchase.quantity_installments %></label>
 		  </td> 
 		</tr>
-	<% end %>
+		<% @total = @total + purchase.value_of_person(@person) %>
+	<% end %>	
 </table>
+<%= render 'total',:total => @total %>
+

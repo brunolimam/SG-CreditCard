@@ -1,7 +1,4 @@
-<center><h2>Relátorio de compras</h2></center>
-
-
-
+<%= render 'header' %>
 <table class="table table-striped">
 	<thead>
 		<tr>            
@@ -41,5 +38,9 @@
 			  </td> 
 			</tr>
 		<% end %>
-	<% end %>
+	<% end %>	
 </table>
+
+<%= render 'total',:total => @total %>
+
+

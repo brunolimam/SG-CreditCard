@@ -1,0 +1,27 @@
+<%= render 'header' %>
+<% @people.each do |person| %>
+	<center><h2><%= person.name %></h2></center>
+
+	<table class="table table-striped">
+		<thead>
+			<tr>            
+				<th><label class="section">Mês</label></th> 
+				<th><label class="section">Valor</label></th>   
+	  
+			</tr>
+		</thead> 
+		<% person.purchases_values.each do |value| %>		
+				<tr>
+					<td>			 
+						<label class="fields-show-view"><%= value[0] %></label>
+					</td>	
+					<td>
+						<label class="fields-show-view"><%= number_to_currency(value[1]) %></label>
+					</td> 
+				</tr>		
+		<% end %>
+	</table>	
+<%= render 'total',:total => person.purchases_total %>	
+<br><br><br>
+<p class="page-breaker"></p>
+<% end %>	

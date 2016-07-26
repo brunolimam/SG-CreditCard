@@ -54,9 +54,14 @@
             </li> 
             <li>
               <%= link_to report_prepare_path(:type => 'report_purchases_values_by_person_in_months'), remote: true do %>
-                  Relatório Valores por Pessoa <i class="fa fa-file-pdf-o fa-lg" aria-hidden="true"></i>
+                  Relatório Valores Faturas por Pessoa <i class="fa fa-file-pdf-o fa-lg" aria-hidden="true"></i>
                 <% end %>
-            </li>                
+            </li>   
+            <li>
+              <%= link_to report_purchases_values_for_persons_in_months_path(:format => :pdf), :target => '_blank'  do %>
+                  Relatório Valores <i class="fa fa-file-pdf-o fa-lg" aria-hidden="true"></i>
+                <% end %>
+            </li>                            
             <li>
               <%= link_to report_prepare_path(:type => 'report_purchases_person_by_person'), remote: true do %>
                   Relatório compras por Pessoa <i class="fa fa-file-pdf-o fa-lg" aria-hidden="true"></i>

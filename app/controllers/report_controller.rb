@@ -5,35 +5,55 @@ class ReportController < ApplicationController
   def prepare
   end
 
-  def purchases
-    set_pdf_data 'pdf/purchases',@purchases 
+  def orientation ret    
+    return ret ? "Landscape" : "Portrait"
   end
 
-  def purchases_person_by_person
-    set_pdf_data 'pdf/purchases_person_by_person',@purchases 
+  def purchases
+    @total = @purchases.map(&:value).inject(:+)
+    @title = "Relatório de Compras"
+    @orientation = orientation(true)
+    set_pdf_data 'pdf/purchases',@purchases,@title,@orientation
+  end
+
+  def purchases_person_by_person    
+    @title = "Relatório de Compras por Pessoa" 
+    @orientation = orientation(true)
+    set_pdf_data 'pdf/purchases_person_by_person',@purchases_by_person,@title,@orientation
   end
 
   def purchases_by_month     
   end
 
-  def purchases_values_by_person_in_months     
-    set_pdf_data 'pdf/purchases_values_by_person_in_months',@purchases_values
+  def purchases_values_by_person_in_months   
+    @total = @person.installments.map(&:value).inject(:+) 
+    @title = "Relatório Valores Faturas por Pessoa"  
+    @orientation = orientation(false)
+    set_pdf_data 'pdf/purchases_values_by_person_in_months',@purchases_values,@title,@orientation
   end  
 
-  def purchases_by_person  
-    set_person
-    set_pdf_data 'pdf/purchases_by_person',@purchases_by_person  
+  def purchases_values_for_persons_in_months   
+    @title = "Relatório Valores Faturas por Pessoas"  
+    @orientation = orientation(false)
+    set_pdf_data 'pdf/purchases_values_for_persons_in_months',@people = Person.order(:name),@title,@orientation
+  end   
+
+  def purchases_by_person      
+    set_person    
+    @title = "Relatório Compras por Pessoa"  
+    @orientation = orientation(true)
+    set_pdf_data 'pdf/purchases_by_person',@purchases_by_person,@title,@orientation 
   end
 
   def purchases_graphics
-  	@purchases_values_by_person_in_months = Installment.group_by_month(:p_day, format: "%b/%y").sum(:value)
+  	@purchases_by_month = Installment.group_by_month(:p_day, format: "%b/%y").sum(:value)
   end
 
 
-  def set_pdf_data action,data
+  def set_pdf_data action,data,report_name,orientation
      html = render_to_string(:action => action, :layout => false)
-     kit = PDFKit.new(html,:footer_right => Time.now.strftime("%d/%m/%Y")+"-"+Time.now.strftime("%H:%M:%S"),:footer_left => '',:orientation => 'Landscape')     
-     kit.stylesheets << "#{Rails.root}/vendor/assets/bootstrap.css"
+     kit = PDFKit.new(html,:footer_right => Time.now.strftime("%d/%m/%Y")+"-"+Time.now.strftime("%H:%M:%S"),:footer_left => report_name,:orientation => orientation)     
+     kit.stylesheets << "#{Rails.root}/vendor/assets/bootstrap.css"     
      
       pdf = kit.to_pdf
       
@@ -41,6 +61,7 @@ class ReportController < ApplicationController
                 :type => "application/pdf",
                 :disposition  => "inline",
                 :data => data
+
   end
 
 
