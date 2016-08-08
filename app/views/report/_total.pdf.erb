@@ -1,1 +1,5 @@
-<div class="alert alert-info pull-right" role="alert"><h4>TOTAL <%= number_to_currency total %></h4></div>
+<% title = 'TOTAL' if !title.present? %>
+
+<div class="alert alert-info pull-right" role="alert">
+	<h4><%= title %> <%= number_to_currency total %></h4>
+</div>

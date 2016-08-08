@@ -18,7 +18,7 @@ class ReportController < ApplicationController
 
   def purchases_person_by_person    
     @title = "Relatório de Compras por Pessoa" 
-    @orientation = orientation(true)
+    @orientation = orientation(false)
     set_pdf_data 'pdf/purchases_person_by_person',@purchases_by_person,@title,@orientation
   end
 
@@ -26,7 +26,7 @@ class ReportController < ApplicationController
   end
 
   def purchases_values_by_person_in_months   
-    @total = @person.installments.map(&:value).inject(:+) 
+    @total = @person.installments.map(&:value).inject(:+)     
     @title = "Relatório Valores Faturas por Pessoa"  
     @orientation = orientation(false)
     set_pdf_data 'pdf/purchases_values_by_person_in_months',@purchases_values,@title,@orientation
@@ -68,7 +68,7 @@ class ReportController < ApplicationController
   private 
   def set_purchases_values
     set_person
-    @purchases_values = @person.installments.group_by_month(:p_day, format: "%b/%y").sum(:value)
+    @purchases_values = @person.installments.group_by_month(:p_day, format: "%b/%y").sum(:value)    
   end    
 
   def set_purchases

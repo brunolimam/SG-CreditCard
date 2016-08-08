@@ -7,8 +7,12 @@
 
 /*pdf css */
 
-      .page-breaker {
-      display: block;
-      page-break-after: always;
-      border :1px solid white
-      }
+.page-breaker {
+display: block;
+page-break-after: always;
+border :1px solid white
+}
+
+.small-value-row{
+	font-size: 11px;	
+}

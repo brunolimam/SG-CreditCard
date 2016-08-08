@@ -10,6 +10,10 @@ class Installment < ActiveRecord::Base
     where("p_day >= ?", date)
   }
 
+  scope :after_date_for_count, -> {
+    select(:p_day).where("p_day >= ?", DateTime.now.utc).group(:p_day)
+  }   
+
   scope :for_pay_in_date, ->(date) {
     select("installments.p_day", "installments.person_id", "installments.value", "installments.purchase_id").includes(:person, :purchase).where(p_day: date).order("purchases.purchased_in ASC")    
   }

@@ -34,9 +34,33 @@ class Purchase < ActiveRecord::Base
     self.installments.where(person_id: person.id).map(&:value).inject(:+)
   end
 
+  def value_ok person
+   bill_value = self.value_of_person(person)/self.quantity_installments
+   remaining = self.quantity_installments - self.installments.after_date_for_count.size.count
+   bill_value * remaining
+  end
+
+  def value_remaining person
+   bill_value = self.value_of_person(person)/self.quantity_installments   
+   bill_value * self.installments.after_date_for_count.size.count
+  end  
+
+  def quantity_installments_ok
+    self.quantity_installments - self.installments.after_date_for_count.size.count    
+  end
+  
+  def quantity_installments_remaining
+    self.installments.after_date_for_count.size.count    
+  end
+
   def payment
     "#{number_to_currency(value)} em #{quantity_installments}x  de #{number_to_currency(value/quantity_installments)}"
   end
+
+  def payment_bills person
+    bill_value = self.value_of_person(person)/self.quantity_installments  
+    "#{quantity_installments} x #{number_to_currency(bill_value)}"
+  end  
 
   private
     def next_day_of_date(date, close_bill_day)

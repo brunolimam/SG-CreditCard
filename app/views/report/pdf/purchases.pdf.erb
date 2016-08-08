@@ -2,45 +2,71 @@
 <table class="table table-striped">
 	<thead>
 		<tr>            
-			<th><label class="section">Comprador</label></th>
-			<th><label class="section">Data compra</label></th>
-			<th><label class="section">Primeira parc</label></th>
-			<th><label class="section">Última parc</label></th>
-			<th><label class="section">Estabelecimento</label></th>      
+			<th><label class="section">#</label></th>
+			<th><label class="section">Compra</label></th>
+			<th><label class="section">1ª parc</label></th>
+			<th><label class="section">Últ parc</label></th>
+			<th><label class="section">Estab.</label></th>      
 			<th><label class="section">Valor</label></th>   
 			<th><label class="section">Parcs</label></th>   
+			<th colspan="2" style="text-align: center;"><label class="section">OK</label></th>
+			<th colspan="2"><label class="section">Restante</label></th>  			
 		</tr>
 	</thead> 
+	<% @ok = 0 %>
 	<% @purchases.each do |purchase| %>
 		<% purchase.people.each do |person| %>
 			<tr id="purchase_<%= purchase.id %>">  
-			  <td>
+			  <td class="small-value-row">
 			    <label class="fields-show-view"><%= person.name %></label>
 			  </td>		
-			  <td>
-			    <label class="fields-show-view"><%= purchase.purchased_in.strftime("%d/%m/%Y") %></label>
+			  <td class="small-value-row">
+			    <label class="fields-show-view"><%= purchase.purchased_in.strftime("%d/%m/%y") %></label>
 			  </td>
-			  <td>
+			  <td class="small-value-row">
 			    <label class="fields-show-view"><%= l(purchase.installments.first.p_day,format: '%b/%y') %></label>
 			  </td>		  		  
-			  <td>
+			  <td class="small-value-row">
 			    <label class="fields-show-view"><%= l(purchase.installments.last.p_day,format: '%b/%y') %></label>
 			  </td>		  
 			  
-			  <td>
+			  <td class="small-value-row">
 			    <label class="fields-show-view"><%= purchase.place_name %></label>
 			  </td> 
-			  <td>
+			  <td class="small-value-row">
 			    <label class="fields-show-view"><%= number_to_currency(purchase.value_of_person(person)) %></label>
 			  </td> 
-			  <td>
-			    <label class="fields-show-view"><%= purchase.quantity_installments %></label>
-			  </td> 
+			  <td class="small-value-row">
+			    <label class="fields-show-view"><%= purchase.payment_bills(person) %></label>
+			  </td>
+		  <td class="small-value-row">
+		    <label class="fields-show-view">
+		    	<%= purchase.quantity_installments_ok %>
+		    </label>
+		  </td> 
+		  <td class="small-value-row">
+		  	<label class="fields-show-view">
+		  		<%= number_to_currency(purchase.value_ok(person)) %>
+		  	</label>
+		  </td> 
+		  <td class="small-value-row">
+		    <label class="fields-show-view">
+		    	<%= purchase.quantity_installments_remaining %>
+		    </label>
+		  </td> 	
+		  <td class="small-value-row">
+		  	<label class="fields-show-view">
+		  		<%= number_to_currency(purchase.value_remaining(person)) %>
+		  	</label>
+		  </td> 			  			   
 			</tr>
+			<% @ok = @ok + purchase.value_ok(person) %>
 		<% end %>
 	<% end %>	
 </table>
 
-<%= render 'total',:total => @total %>
+<%= render 'total',:total => @total - @ok,:title => 'RESTANTE' %>
+<%= render 'total',:total => @ok,:title => 'PAGO' %>
+<%= render 'total',:total => @total,:title => 'TOTAL' %>
 
 
