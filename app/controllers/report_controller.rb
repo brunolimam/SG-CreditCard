@@ -73,10 +73,10 @@ class ReportController < ApplicationController
 
   def set_purchases
     sort = params[:sort]
-    order = params[:order]    
-  	
+    order = params[:order]      	
     @purchases = Purchase.order(sort+' '+order).all
     @purchases_by_person = @purchases.purchases(params[:person_id])
+    @purchases_by_person = @purchases_by_person.pending if params[:pending] == '1'
   end
 
   def set_person

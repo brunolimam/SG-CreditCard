@@ -12,6 +12,10 @@ class Purchase < ActiveRecord::Base
     joins('INNER JOIN installments i on i.purchase_id = purchases.id').where("i.person_id = ?", person_id).uniq
   }
 
+  scope :pending, -> {
+    where("p_day >= ?", DateTime.now.utc)
+  }    
+
   def create_installments(people)
     @people = Person.where(id: people.map{|x| x[:id]}).order(id: :asc)
     people = people.sort_by { |h| h[:id] }

@@ -7,12 +7,13 @@
 		<tr>            			
 			<th><label class="section">Compra</label></th>
 			<th><label class="section">1ª parc</label></th>
-			<th><label class="section">Últ. parc</label></th>
+			<th><label class="section">Últ.</label></th>
 			<th><label class="section">Estab.</label></th> 
 			<th><label class="section">Valor</label></th>  
-			<th><label class="section">Parcelas</label></th> 		 
-			<th colspan="2" style="text-align: center;"><label class="section">OK</label></th>   
-			<th colspan="2"><label class="section">Restante</label></th>   			
+			<th><label class="section">Parcs</label></th> 		 			
+			<th><label class="section">Parcs OK/Rest</label></th> 	 					
+			<th><label class="section">Valor OK</label></th>   
+			<th><label class="section">Valor Rest.</label></th>   	
 		</tr>
 	</thead> 
 	<% @total = 0 %>
@@ -20,45 +21,43 @@
 	<% @remaining = 0 %>
 	<% @purchases_by_person.each do |purchase| %>
 		<tr id="purchase_<%= purchase.id %>">  
-		  <td>
+		  <td class="small-value-row">
 		    <label class="fields-show-view"><%= purchase.purchased_in.strftime("%d/%m/%y") %></label>
 		  </td>
-		<td>
+		<td class="small-value-row">
 		    <label class="fields-show-view"><%= l(purchase.installments.first.p_day,format: '%b/%y') %></label>
 		  </td>		  		  
-		  <td>
+		  <td class="small-value-row">
 		    <label class="fields-show-view"><%= l(purchase.installments.last.p_day,format: '%b/%y') %></label>
 		  </td>		 
 		  
-		  <td>
+		  <td class="small-value-row">
 		    <label class="fields-show-view"><%= purchase.place_name %></label>
 		  </td> 
-		  <td>
+		  <td class="small-value-row">
 		    <label class="fields-show-view"><%= number_to_currency(purchase.value_of_person(@person)) %></label>
 		  </td>
-		  <td>
+		  <td class="small-value-row">
 		    <label class="fields-show-view"><%= purchase.payment_bills(@person) %></label>
-		  </td>   
-		  
-
-		  <td>
+		  </td> 
+		  <td class="small-value-row">
 		    <label class="fields-show-view">
 		    	<%= purchase.quantity_installments_ok %>
+		    </label>		  /
+		    <label class="fields-show-view">
+		    	<%= purchase.quantity_installments_remaining %>
 		    </label>
-		  </td> 
-		  <td>
+		  </td> 		  
+		  <td class="small-value-row">
 		  	<label class="fields-show-view">
 		  		<%= number_to_currency(purchase.value_ok(@person)) %>
 		  	</label>
 		  </td> 
 
-		  <td>
+		  <td class="small-value-row">
 		    <label class="fields-show-view">
-		    	<%= purchase.quantity_installments_remaining %>
-		    </label>
-		  </td> 	
-		  <td>
-		  	<label class="fields-show-view">
+		    	
+	
 		  		<%= number_to_currency(purchase.value_remaining(@person)) %>
 		  	</label>
 		  </td> 		  	  
