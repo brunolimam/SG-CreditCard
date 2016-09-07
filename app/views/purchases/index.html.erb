@@ -1,7 +1,8 @@
 <%= stylesheet_link_tag 'custom' %>
  <%= link_to "Adicionar", new_purchase_path, remote: true, class: "btn btn-success fields-show-button" %>
 
- <div class="col-sm-2 navbar-form pull-right">
+
+<div class="col-sm-2 navbar-form pull-right">
       <%= render "composer/search", path: purchases_path%>
   </div>
 

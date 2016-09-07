@@ -15,19 +15,6 @@
       <% end %>    
   </div>
 
-
-  <div class="input-group">
-      <%= select_tag "type_search", options_for_select([      
-        ['Estabelecimento', 'place_name'],['Pessoa', 'name']],
-      selected: params[:type_search]),class: "form-control fields-show-view" %>
-      <span class="input-group-btn">
-        <%= text_field_tag :search, params[:search], placeholder: "Busca", class: "form-control fields-show-view",autocomplete: "off" %>          
-        <%= button_tag(type: 'submit', class: "btn btn-primary",value: 'buscar') do %>
-        <span class="glyphicon glyphicon-search"></span>
-      </span>
-      <% end %>    
-  </div>
-
     <% if params[:search].present? %>
       <%= link_to path do %>
         <span class="glyphicon glyphicon-remove"></span>      

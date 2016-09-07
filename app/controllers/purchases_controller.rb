@@ -59,6 +59,15 @@ class PurchasesController < ApplicationController
   end
 
   private
+    
+    def check_if_true(item)
+      if(item == 'true' or item == true or item == 1 or item == '1')
+        return true
+      else
+        return false
+      end
+    end
+    
     def set_purchase
       @purchase = Purchase.find(params[:id])
     end
@@ -67,6 +76,7 @@ class PurchasesController < ApplicationController
       type_search = params[:type_search]
       search = params[:search]
       @search = Purchase.all.order(purchased_in: :desc)
+      @search = @search.purchases_pending if check_if_true(params[:remaining])
       @search = @search.find_purchaser(search) if type_search == 'name'
       @search = @search.where(type_search+" ILIKE ?", "%"+search+"%") if type_search.present? and type_search != 'name'
       @search = @search.search(params[:q])

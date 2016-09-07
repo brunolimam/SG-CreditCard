@@ -5,6 +5,11 @@ class PeopleController < ApplicationController
     @search = Person.all.order(:name).includes(:installments, :installments_for_pay)
     @search = @search.search(params[:q])
     @people = @search.result
+
+    respond_to do |format|
+      format.html
+      format.xlsx
+    end
   end
 
   def new

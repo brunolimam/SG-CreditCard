@@ -1,0 +1,26 @@
+wb = xlsx_package.workbook
+
+
+wb.add_worksheet(name: "Products") do |sheet|
+  # define your styles
+  title = sheet.styles.add_style(:bg_color => "FFFF0000",
+                             :fg_color=>"#FF000000",
+                             :border=>Axlsx::STYLE_THIN_BORDER,
+                             :alignment=>{:horizontal => :center})
+
+  date_time = sheet.styles.add_style(:num_fmt => Axlsx::NUM_FMT_YYYYMMDDHHMMSS,
+                                 :border=>Axlsx::STYLE_THIN_BORDER)
+
+  percent = sheet.styles.add_style(:num_fmt => Axlsx::NUM_FMT_PERCENT,
+                               :border=>Axlsx::STYLE_THIN_BORDER)
+
+  currency = sheet.styles.add_style(:format_code=>"R$#.##0;[Red]¥-#,##0",
+                              :border=>Axlsx::STYLE_THIN_BORDER)
+
+
+  sheet.add_row ["Nome", "Unidade", "Valor"]
+
+  @people.each do |person|
+    sheet.add_row [person.name, "Maracanau", person.installments.map(&:value).inject(:+)], :style=>[title, title, currency]
+  end
+end

@@ -14,6 +14,10 @@ class Purchase < ActiveRecord::Base
 
   scope :pending, -> {
     where("p_day >= ?", DateTime.now.utc)
+  }
+
+  scope :purchases_pending, ->{
+   joins('INNER JOIN installments i on i.purchase_id = purchases.id').where("p_day >= ?", DateTime.now.utc).uniq 
   }    
 
   def create_installments(people)
