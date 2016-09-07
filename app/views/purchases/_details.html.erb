@@ -7,13 +7,44 @@
 		<th class="th-field">Totalizador</th>
 		<% @purchase.installments.where('person_id = ?',person.id).order(:number).each do |pp|%>
 			<tr>
-				<td><%= pp.number %></td>
+				<td>
+					<% if pp.paid? %>
+						<i class="glyphicon glyphicon-ok-circle verde"></i>
+					<% else %>
+						<i class="glyphicon glyphicon-arrow-right"></i>
+					<% end %>
+					<%= pp.number %>
+				</td>
 				<td><%= l(pp.p_day, format: '%b/%y') %></td>					
 				<td><%= number_to_currency(pp.value) %></td>
 				<td><%= number_to_currency(pp.number*pp.value) %></td>
 			</tr>
 		<% end %>	
 	</table>
+	<table class="table table-bordered table-striped table-sm">		
+		<thead>
+			<th class="th-field" colspan="2">Pago</th>	
+			<th class="th-field" colspan="2">Restante</th>
+		</thead>
+		<tbody>
+			<th class="th-field">Parcelas</th>
+			<th class="th-field">Valor</th>
+			<th class="th-field">Parcelas</th>
+			<th class="th-field">Valor</th>
+		</tbody>
+			<td>
+			 	<i class="glyphicon glyphicon-ok-circle verde"></i>
+				<%= @purchase.quantity_installments_ok %>
+			</td>
+			<td><%= number_to_currency(@purchase.quantity_installments_ok * @purchase.value_of_person_for_bill(person)) %></td>
+			<td>
+				<i class="glyphicon glyphicon-arrow-right"></i>
+				<%= @purchase.quantity_installments_remaining %></td>
+			<td><%= number_to_currency(@purchase.quantity_installments_remaining * @purchase.value_of_person_for_bill(person)) %></td>			
+	</table>
+
+	
+	
 <% end %>
 
 

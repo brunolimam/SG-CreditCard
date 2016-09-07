@@ -11,3 +11,4 @@ Rails.application.config.assets.version = '1.0'
 # Rails.application.config.assets.precompile += %w( search.js )
 Rails.application.config.assets.precompile += %w( purchase_form.js )
 Rails.application.config.assets.precompile += %w( custom-auto-complete.css )
+Rails.application.config.assets.precompile += %w( custom.css )

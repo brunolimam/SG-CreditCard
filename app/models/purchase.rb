@@ -34,8 +34,13 @@ class Purchase < ActiveRecord::Base
     end
   end
 
+
   def value_of_person(person)
     self.installments.where(person_id: person.id).map(&:value).inject(:+)
+  end
+
+  def value_of_person_for_bill(person)
+    self.installments.where(person_id: person.id).map(&:value).first
   end
 
   def value_ok person
