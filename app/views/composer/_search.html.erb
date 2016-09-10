@@ -3,12 +3,16 @@
   <div class="input-group">
       <div class="checkbox">
          <label>
+          <%= check_box_tag "ok",true, check_if_true(params[:ok]) %>
+          Pagas
+         </label>
+   
           <%= check_box_tag "remaining",true, check_if_true(params[:remaining]) %>
           Restante
          </label>
       </div>
 
-      <span class="input-group-btn">
+      <span>
         <%= button_tag(type: 'submit', class: "btn btn-primary",value: 'buscar') do %>
         <i class="glyphicon glyphicon-filter"></i>
       </span>
@@ -28,7 +32,7 @@
       <% end %>    
   </div>
 
-    <% if params[:search].present? %>
+    <% if(params[:search].present? or params[:ok].present? or params[:remaining].present?) %>
       <%= link_to path do %>
         <span class="glyphicon glyphicon-remove"></span>      
     <% end %>

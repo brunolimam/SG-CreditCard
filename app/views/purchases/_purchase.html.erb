@@ -1,6 +1,13 @@
 <tr id="purchase_<%= purchase.id %>">
   <td>
-    <label class="fields-show-view"><%= purchase.id %></label>
+    <label class="fields-show-view">
+      <% if purchase.paid? %>
+        <i class="glyphicon glyphicon-ok-circle verde"></i>
+      <% else %>
+        <i class="glyphicon glyphicon-piggy-bank rosa"></i>
+      <% end %>
+      <%= purchase.id %>
+    </label>
   </td>
   <td>
     <label class="fields-show-view"><%= purchase.purchased_in.strftime("%d/%m %Y") %></label>

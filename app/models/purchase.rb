@@ -18,7 +18,12 @@ class Purchase < ActiveRecord::Base
 
   scope :purchases_pending, ->{
    joins('INNER JOIN installments i on i.purchase_id = purchases.id').where("p_day >= ?", DateTime.now.utc).uniq 
-  }    
+  }
+  
+
+  def paid?
+    self.installments.last.p_day<=DateTime.now.utc ? true : false
+  end    
 
   def create_installments(people)
     @people = Person.where(id: people.map{|x| x[:id]}).order(id: :asc)
@@ -37,7 +42,6 @@ class Purchase < ActiveRecord::Base
       end
     end
   end
-
 
   def value_of_person(person)
     self.installments.where(person_id: person.id).map(&:value).inject(:+)
@@ -64,7 +68,12 @@ class Purchase < ActiveRecord::Base
   
   def quantity_installments_remaining
     self.installments.after_date_for_count.size.count    
-  end
+  end  
+
+  def value_total_remaining
+   bill_value = self.value/self.quantity_installments   
+   bill_value * self.installments.after_date_for_count.size.count
+  end 
 
   def payment
     "#{number_to_currency(value)} em #{quantity_installments}x  de #{number_to_currency(value/quantity_installments)}"
