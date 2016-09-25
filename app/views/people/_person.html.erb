@@ -10,7 +10,8 @@
   </td>
   <td>
     <label class="fields-show-view">
-      <%= l(Installment.where(:person_id => person.id).order(:p_day).last.p_day,format: '%b/%y') %>
+      <% installments = Installment.where(:person_id => person.id).order(:p_day) %>
+      <%= l(installments.last.p_day,format: '%b/%y') if installments.last.present? %>
     </label>
   </td>  
       
