@@ -15,7 +15,7 @@
       <div class="panel-heading">
         <i class="fa fa-bar-chart-o fa-fw"></i> Gráfico Mensal
       </div>
-<%= line_chart Purchase.group("purchased_in").sum(:value), {library: {hAxis: {title: "Meses"}, vAxis: {title: "Y"}}} %>
+        <%= line_chart Purchase.group_by_month(:purchased_in).sum(:value), {library: {hAxis: {title: "Meses"}, vAxis: {title: "Y"}}} %>
 
   	</div>
   </div>
