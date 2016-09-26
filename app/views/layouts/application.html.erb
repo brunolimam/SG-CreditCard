@@ -7,11 +7,17 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <div class="container">
-    <%= render 'composer/menu' %>
-    <div class="container-fluid">
-      <%= yield %>
+
+  <% if current_user.present? %> 
+    <div class="container">
+      <%= render 'composer/menu' %>
+      <div class="container-fluid">
+        <%= yield %>
+      </div>
     </div>
-  </div>
+  <% else %>
+    <%= yield %>
+  <% end %>
+  
 </body>
 </html>
