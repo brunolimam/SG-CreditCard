@@ -22,7 +22,7 @@ class Purchase < ActiveRecord::Base
   
 
   def paid?
-    self.installments.last.p_day<=DateTime.now.utc ? true : false
+    self.installments.last.p_day<=DateTime.now.utc ? true : false if self.installments.last.present?
   end    
 
   def create_installments(people)
