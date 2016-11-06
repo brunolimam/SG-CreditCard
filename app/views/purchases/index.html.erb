@@ -6,6 +6,8 @@
       <%= render "composer/search", path: purchases_path%>
 </div>
 <br><br><br>
+
+<%if @value.size >0 %>
 <div class="row">
   <div class="col-md-6">
     <table class="table table-bordered table-striped table-sm"> 
@@ -29,32 +31,7 @@
       <td><%=number_to_currency(@value.map(&:value).inject(:+))%></td>
     </table>
   </div>  
-
-  <div class="col-md-6">
-    <table class="table table-bordered table-striped table-sm"> 
-      <thead>
-        <th colspan="3">Compras - SubTotal</th>
-        <th colspan="3">Valores - Subtotal</th>
-      </thead>
-      <thead>
-        <th>Pagas</th>
-        <th>Restantes</th>
-        <th>Total</th>
-        <th>Tot Pagas</th>
-        <th>Restantes</th>
-        <th>Total</th>
-      </thead>
-      <td><%=@ok_for_search%></td>
-      <td><%=@remaining_for_search%></td>
-      <td><%=@all_for_search%></td>
-      <td><%=number_to_currency(@value_for_search.map(&:value).inject(:+)-@value_remaining_for_search)%></td>      
-      <td><%=number_to_currency(@value_remaining_for_search)%></td>      
-      <td><%=number_to_currency(@purchases.map(&:value).inject(:+))%></td>
-    </table>
-  </div>     
-</div>
-
-
+<% end %>
 
 <table class="table table-striped">
   <thead>
