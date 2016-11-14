@@ -17,4 +17,5 @@
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR
 //= require jquery-ui/autocomplete
 //= require autocomplete-rails
+//= require maskmoney
 //= require turbolinks

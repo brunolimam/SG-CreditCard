@@ -1,0 +1,12 @@
+<tr id="installment_<%= installment.id %>">
+  <td>
+    <label class="fields-show-view"><%=  l(installment.p_day, format: '%B %Y')  %></label>
+  </td>
+  <td>
+    <% value = installment.attributes.key?('total_value') ? installment.total_value : installment.value %>
+    <label class="fields-show-view"><%= number_to_currency(value) %></label>
+  </td> 
+  <td>
+    <%= link_to "Visualizar", details_bills_installments_path(p_day: installment.p_day, per_person: true),remote: true, :class =>"btn btn-default" %>
+  </td>
+</tr>

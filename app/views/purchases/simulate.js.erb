@@ -1,0 +1,9 @@
+$('#dialog h3').html("<i class='glyphicon glyphicon-plus'></i>Simular Nova Compra");
+
+$('.modal-body').html('<%= j render("simulate_form") %>');
+
+$('#dialog').modal("show");
+
+$('#dialog').on('shown.bs.modal', function () {
+  $('.first_input').focus()
+})

@@ -8,6 +8,9 @@ Rails.application.routes.draw do
   post 'report/purchases_person_by_person'
   get 'report/purchases_graphics'
 
+  get 'purchases/simulate'
+  post 'purchases/simulate_with_value'
+
   root 'purchases#index'
 
 
@@ -24,7 +27,7 @@ Rails.application.routes.draw do
   end
   
   resources :purchases do
-    collection do 
+    collection do       
       get :autocomplete_person_name
       get :autocomplete_purchase_place_name
       

@@ -10,6 +10,13 @@ class PurchasesController < ApplicationController
   def details     
   end
 
+  def simulate
+  end
+
+  def simulate_with_value
+    @people = Person.find(params[:person_id])
+  end  
+
   def new
     @purchase = Purchase.new
   end

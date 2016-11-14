@@ -1,0 +1,36 @@
+<%= javascript_include_tag 'value_maskmoney' %>
+<%= stylesheet_link_tag 'custom-auto-complete' %>
+
+<%= form_for '',remote: true, :url => purchases_simulate_with_value_path(person_id: @person_id), :method => :post do |f| %>
+
+ <div class="row">
+ 	<div class="col-md-3">  
+		<%= hidden_field_tag(:person_id)%>	
+		<label class="field">Pessoa</label>
+		<div class="form-group">
+		<%= autocomplete_field_tag 'person', '', autocomplete_person_name_purchases_path, :size => 75,required: true,:id_element => '#person_id',:class => "form-control input-md" %>
+		</div>   
+	</div>
+</div>
+
+
+  <div class="row">
+    <div class="col-md-3">    
+      <label class="field">Valor</label>
+      <br>
+		<%= f.text_field :value,required: true, :class => "form-control input-md" %>
+    </div>
+
+    <div class="col-md-3">    
+      <label class="field">Numero de parcelas</label>
+      <br>
+       <%= f.number_field :quantity_installments,required: true,:class => "form-control input-md",:maxlength => 150 %> 
+    </div>    
+  </div>
+  <br>
+  <div class="actions">
+    <%= f.submit "Simular", :class=>"btn btn-success" %>
+  </div>
+<% end %>
+
+

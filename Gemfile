@@ -40,6 +40,7 @@ gem 'groupdate'
 gem "chartkick"
 gem "font-awesome-rails"
 gem 'axlsx_rails'
+gem 'maskmoney-rails'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

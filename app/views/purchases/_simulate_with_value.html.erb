@@ -1,0 +1,80 @@
+<table class="table table-striped">
+	<thead>
+		<tr>            
+			<th><label class="section">Mês</label></th> 
+			<th><label class="section">Valor Fatura</label></th>   
+			<th><label class="section">Valor Compra Simulada</label></th>   
+			<th><label class="section">Valor após Compra</label></th>   
+		</tr>
+	</thead> 
+<% month_value = (params[:value].to_f/params[:quantity_installments].to_f) %>
+
+<% if @people.next_purchases_values.size>0%>	
+	<% cont =0 %>		
+	<% @x = params[:quantity_installments].to_i-@people.next_purchases_values.size %>	
+		<% @people.next_purchases_values.each do |value| %>
+			<% cont = cont+1%>
+			<tr>
+				<td>			 
+					<label class="fields-show-view"><%= value[0] %></label>
+					</td>	
+				<td>
+					<label class="fields-show-view"><%= number_to_currency(value[1]) %></label>
+				</td> 
+				<% if cont<=params[:quantity_installments].to_i%>
+					<td>		
+						<label class="fields-show-view"><%= number_to_currency(month_value) %></label>	
+					</td>
+					<td>
+						<label class="fields-show-view"><%= number_to_currency(value[1]+month_value) %></label>
+					</td>
+				<% else %>
+					<td>						
+					</td>
+					<td>
+						<label class="fields-show-view"><%= number_to_currency(value[1]) %></label>
+					</td>
+				<% end %>
+			</tr>		
+		<% end %>
+
+		<% if @x>0%>
+			<% (1..@x).each do |i|%>			
+				<tr>
+					<td>
+						<label class="fields-show-view">
+							<%=l(@people.next_purchases_values.first[0].to_date+(i + @people.next_purchases_values.size).month, format: "%b/%y")%>
+						</label>
+					</td>
+					<td></td>
+					<td><label class="fields-show-view"><%= number_to_currency(month_value)%></label></td>
+					<td><label class="fields-show-view"><%= number_to_currency(month_value)%></label></td>
+				</tr>
+			<% end %>
+		<%end %>
+<%else%>
+	<% (1..params[:quantity_installments].to_i).each do |i| %>	
+		<tr>
+			<td>
+			<label class="fields-show-view">
+			<%=l(DateTime.now.utc.to_date+i.month, format: "%b/%y")%>
+			</label>
+			</td>
+			<td></td>
+			<td><label class="fields-show-view"><%= number_to_currency(month_value)%></label></td>
+			<td><label class="fields-show-view"><%= number_to_currency(month_value)%></label></td>
+		</tr>
+	<%end%>
+<%end%>
+
+	<thead>
+		<th></th>		
+	</thead>
+	<thead>		
+		<th>Total</th>
+		<th><label class="fields-show-view"><%= number_to_currency(@people.value_remaining)%></label>
+		<th><label class="fields-show-view"><%= number_to_currency(params[:value])%></label></th>
+		<th><label class="fields-show-view"><%= number_to_currency(@people.value_remaining+params[:value].to_f)%></label></th>
+	</thead>	
+</table>	
+

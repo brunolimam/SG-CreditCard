@@ -8,6 +8,15 @@ class Person < ActiveRecord::Base
     self.installments.group_by_month(:p_day, format: "%b/%y").sum(:value)
   end
 
+
+  def next_purchases_values
+    self.installments.where("p_day >= ?", DateTime.now.utc).group_by_month(:p_day, format: "%b/%y").sum(:value)
+  end  
+
+  def value_remaining
+  	self.installments.where("p_day >= ?", DateTime.now.utc).sum(:value)
+  end
+
   def purchases_total
     self.installments.sum(:value)
   end  
