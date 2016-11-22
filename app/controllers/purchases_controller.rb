@@ -5,6 +5,7 @@ class PurchasesController < ApplicationController
   autocomplete :purchase, :place_name, :full => true, :uniq => true
 
   def index
+    @purchases = @purchases.includes(:installments).paginate(:page => params[:page], :per_page => 20)
   end
 
   def details     
@@ -102,28 +103,28 @@ class PurchasesController < ApplicationController
 
     def totalize_quantity
       @all = Purchase.count
-      @remaining = Purchase.purchases_pending.count
+      @remaining = Purchase.purchases_pending.size
       @ok = @all-@remaining
 
-      @all_for_search = @purchases.count
-      @remaining_for_search = @purchases.purchases_pending.count
+      @all_for_search = @purchases.size
+      @remaining_for_search = @purchases.purchases_pending.size
       @ok_for_search = @all_for_search-@remaining_for_search
     end
 
-    def calc_value_remaining remaining
-      total = 0      
-      remaining.each do |p|
-        total = total+p.value_total_remaining
-      end
-      total
-    end
+    # def calc_value_remaining remaining
+    #   total = 0      
+    #   remaining.each do |p|
+    #     total = total+p.value_total_remaining
+    #   end
+    #   total
+    # end
 
 
     def totalize_values
       @value = Purchase.all
-      @value_remaining = calc_value_remaining(Purchase.purchases_pending)      
+      @value_remaining = Purchase.purchases_pending.map(&:value_total_remaining).inject(:+)      
       @value_for_search = @purchases
-      @value_remaining_for_search = calc_value_remaining(@purchases.purchases_pending)      
+      @value_remaining_for_search = @purchases.purchases_pending.map(&:value_total_remaining).inject(:+)     
     end    
 
     def purchase_params
