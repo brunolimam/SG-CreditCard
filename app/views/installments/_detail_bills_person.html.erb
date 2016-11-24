@@ -7,7 +7,7 @@
       <label class="fields-show-view"><%= installment.purchase.place_name %></label>
     </td>
     <td>
-      <label class="fields-show-view"><%= "#{installment.number}/#{installment.purchase.quantity_installments}" %></label>
+      <label class="fields-show-view"><%= "#{installment.number}/#{installment.purchase.quantity_installments || 1}" %></label>
     </td> 
     <td>
       <% value = installment.attributes.key?('total_value') ? installment.total_value : installment.value %>

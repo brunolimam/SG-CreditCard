@@ -128,6 +128,6 @@ class PurchasesController < ApplicationController
     end    
 
     def purchase_params
-      params.require(:purchase).permit(:purchased_in, :quantity_installments, :place_name, :value)
+      params.require(:purchase).permit(:purchased_in, :quantity_installments, :place_name, :value, :fixed)
     end 
 end

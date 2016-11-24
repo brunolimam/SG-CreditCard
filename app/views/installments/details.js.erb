@@ -1,4 +1,4 @@
-$('#dialog h3').html("<%= l(@installments.first.p_day, format: '%B %Y') %>");
+$('#dialog h3').html("<%= l(params[:p_day].to_datetime, format: '%B %Y') %>");
 
 $('.modal-body').html('<%= j render("details") %>');
 

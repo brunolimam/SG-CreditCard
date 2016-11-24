@@ -22,6 +22,8 @@ class Purchase < ActiveRecord::Base
   
 
   def paid?
+    return false if self.installments.last.p_day.nil?
+
     self.installments.last.p_day<=DateTime.now.utc ? true : false if self.installments.last.present?
   end    
 
@@ -30,15 +32,19 @@ class Purchase < ActiveRecord::Base
     people = people.sort_by { |h| h[:id] }
 
     p_days = []
-    p_days << next_day_of_date(self.purchased_in, Setting.closing_day)
+    if self.fixed?
+      self.quantity_installments = 1
+    else
+      p_days << next_day_of_date(self.purchased_in, Setting.closing_day)
 
-    (self.quantity_installments-1).times do 
-      p_days << p_days.last+1.month
+      (self.quantity_installments-1).times do 
+        p_days << p_days.last+1.month
+      end
     end
 
     @people.each_with_index do |person, index|
       self.quantity_installments.times do |i|
-        Installment.create(person_id: person.id, purchase_id: self.id, number: i+1, value: people[index][:value].to_f/quantity_installments, p_day: p_days[i])
+        Installment.create(person_id: person.id, purchase_id: self.id, number: i+1, value: people[index][:value].to_f/quantity_installments, p_day: p_days[i] || nil)
       end
     end
   end
@@ -63,6 +69,7 @@ class Purchase < ActiveRecord::Base
   end  
 
   def quantity_installments_ok
+    return 0 if fixed?
     self.quantity_installments - self.installments.after_date_for_count.size.count    
   end
   
@@ -76,7 +83,7 @@ class Purchase < ActiveRecord::Base
   end 
 
   def payment
-    "#{number_to_currency(value)} em #{quantity_installments}x  de #{number_to_currency(value/quantity_installments)}"
+    "#{number_to_currency(value)} em #{quantity_installments}x  de #{number_to_currency(value/(quantity_installments || 1))}"
   end
 
   def payment_bills person

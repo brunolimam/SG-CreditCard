@@ -15,7 +15,7 @@
 					<% end %>
 					<%= pp.number %>
 				</td>
-				<td><%= l(pp.p_day, format: '%b/%y') %></td>					
+				<td><%= l(pp.p_day, format: '%b/%y') if pp.p_day.present? %></td>					
 				<td><%= number_to_currency(pp.value) %></td>
 				<td><%= number_to_currency(pp.number*pp.value) %></td>
 			</tr>

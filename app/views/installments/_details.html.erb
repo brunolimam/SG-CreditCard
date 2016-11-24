@@ -1,20 +1,21 @@
 <div class="row">
   <div class="col-md-2">
-    <% prev_disabled = "disabled" if !Installment.has_prev?(@installments.first.p_day) %>
-    <%= link_to details_bills_installments_path(p_day: @installments.first.p_day-1.month, per_person: true),remote: true, :class =>"btn btn-primary #{prev_disabled}"  do %>  
+    <% datetime = params[:p_day].to_datetime %>
+    <% prev_disabled = "disabled" if !Installment.has_prev?(datetime) %>
+    <%= link_to details_bills_installments_path(p_day: datetime-1.month, per_person: true),remote: true, :class =>"btn btn-primary #{prev_disabled}"  do %>  
       <i class="glyphicon glyphicon-circle-arrow-left"></i>
     <% end %>
-    <% next_disabled = "disabled" if !Installment.has_next?(@installments.first.p_day) %>
-    <%= link_to details_bills_installments_path(p_day: @installments.first.p_day+1.month, per_person: true),remote: true, :class =>"btn btn-primary #{next_disabled}"  do %>  
+    <% next_disabled = "disabled" if !Installment.has_next?(datetime) %>
+    <%= link_to details_bills_installments_path(p_day: datetime+1.month, per_person: true),remote: true, :class =>"btn btn-primary #{next_disabled}"  do %>  
       <i class="glyphicon glyphicon-circle-arrow-right"></i>
     <% end %>
 
     <br>
     <br>
-    <%= link_to details_bills_installments_path(p_day: @installments.first.p_day, per_person: true),remote: true, :class =>"btn btn-default" do %>
+    <%= link_to details_bills_installments_path(p_day: datetime, per_person: true),remote: true, :class =>"btn btn-default" do %>
       <i class="glyphicon glyphicon-list-alt"></i>
     <% end %>
-    <%= link_to details_bills_installments_path(p_day: @installments.first.p_day),remote: true, :class =>"btn btn-default"  do %>  
+    <%= link_to details_bills_installments_path(p_day: datetime),remote: true, :class =>"btn btn-default"  do %>  
       <i class="glyphicon glyphicon-eye-open"></i>
     <% end %>
   </div>  

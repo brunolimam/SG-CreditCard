@@ -4,6 +4,7 @@
   </td>
   <td>
     <% value = installment.attributes.key?('total_value') ? installment.total_value : installment.value %>
+    <% value += fixed_installments.map(&:value).inject(:+) %>
     <label class="fields-show-view"><%= number_to_currency(value) %></label>
   </td> 
   <td>
