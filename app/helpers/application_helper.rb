@@ -5,5 +5,20 @@ module ApplicationHelper
   else
     return false
   end
-end
+  end
+
+  def get_percent_used
+    Purchase.purchases_pending.map(&:value_total_remaining).inject(:+)/Setting.limit_card*100
+  end
+  
+  def define_color_by_percent
+    case get_percent_used
+    when 85..100
+      "progress-bar-danger"
+    when 33..85
+      "progress-bar-warning"
+    else
+      "progress-bar-success"
+    end
+  end
 end

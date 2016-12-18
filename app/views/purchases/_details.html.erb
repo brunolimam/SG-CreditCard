@@ -1,3 +1,39 @@
+<div class="row">
+<div class="col-md-4">
+	<h5>
+		<i class='glyphicon glyphicon-calendar'></i><%=l(@purchase.purchased_in, format: '%d/%m/%Y')%>
+		<i class='glyphicon glyphicon-floppy-saved'></i>
+		<%=l(@purchase.created_at, format: '%d/%m/%Y')%>
+	</h5>
+	<h5><%= @purchase.payment %></h5>
+	<h5>
+			<i class='glyphicon glyphicon-ok-circle verde'></i>
+			<%= @purchase.quantity_installments_ok %>x de <%= number_to_currency(@purchase.value/@purchase.quantity_installments) %>
+			<i class='glyphicon glyphicon-hand-right'></i> 
+			<%= number_to_currency(@purchase.quantity_installments_ok * (@purchase.value/@purchase.quantity_installments)) %>
+		</h5> 
+
+		<% if @purchase.quantity_installments_remaining>0%>
+			<h5>
+				<i class='glyphicon glyphicon-arrow-right'></i>
+				<%= @purchase.quantity_installments_remaining %>x de <%= number_to_currency(@purchase.value/@purchase.quantity_installments) %>
+				<i class='glyphicon glyphicon-hand-right'></i>
+				<%= number_to_currency(@purchase.quantity_installments_remaining * (@purchase.value/@purchase.quantity_installments)) %>
+			</h5>
+		<%end%>
+	</div>
+	<div class="col-md-8">
+			<div class="panel panel-default">
+		  <div class="panel-heading">
+		    <h3 class="panel-title">Descrição</h3>
+		  </div>
+		  <div class="panel-body">
+		    <%= @purchase.describe %>
+		  </div>
+		</div>
+	</div>
+</div>
+
 <% @purchase.people.each do |person| %>
 <h4><i class="glyphicon glyphicon-user"></i> <%= person.name %></h4>
 	<table class="table table-bordered table-striped table-sm">		

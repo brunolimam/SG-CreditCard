@@ -14,3 +14,4 @@ end
 
 Setting.create(parameter: "closingday", value: 29, description: "Dia de fechar fatura")
 Setting.create(parameter: "paymentday", value: 11, description: "Dia de pagar fatura")
+Setting.create(parameter: "limitcard", value: 15000, description: "Limite cartao")

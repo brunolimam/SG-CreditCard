@@ -67,12 +67,18 @@
                   Relatório compras por Pessoa <i class="fa fa-file-pdf-o fa-lg" aria-hidden="true"></i>
                 <% end %>
             </li>  
-          </ul>
-          
-            
-          
+          </ul> 
           </li>
       </ul>
+
+<div class="nav navbar-text progress" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 350px; height: 20%; margin-top:10px">
+        <div class="progress-bar <%=define_color_by_percent%>" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="padding-left: 5px; color: black;width: <%= number_to_percentage(get_percent_used, precision: 2) %>;">
+         <%= number_to_percentage(get_percent_used, precision: 2) %>
+        </div>
+      </div>
+
+
+
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">USERNAME
