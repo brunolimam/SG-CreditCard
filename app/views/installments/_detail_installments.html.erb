@@ -1,6 +1,11 @@
 <% @installments.each do |installment| %>
   <tr id="installment_<%= installment.id %>">
     <td>
+      <% if installment.purchase.present? %>
+        <label class="fields-show-view"><%=  l(installment.purchase.purchased_in, format: '%d/%m')  %></label>
+      <% end %>
+    </td>
+    <td>
       <% value = installment.attributes.key?('total_value') ? installment.total_value : installment.value %>
       <label class="fields-show-view"><%= number_to_currency(value) %></label>
     </td> 

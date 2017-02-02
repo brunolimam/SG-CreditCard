@@ -1,6 +1,8 @@
 class Purchase < ActiveRecord::Base
   include ActionView::Helpers::NumberHelper
   has_many :installments
+  has_many :installments_pending, -> { after_date_for_count }, class_name: 'Installment'
+
   has_many :people, -> { uniq }, through: :installments
 
 
@@ -53,26 +55,26 @@ class Purchase < ActiveRecord::Base
 
   def value_ok person
    bill_value = self.value_of_person(person)/self.quantity_installments
-   remaining = self.quantity_installments - self.installments.after_date_for_count.size.count
+   remaining = self.quantity_installments - self.installments_pending.size
    bill_value * remaining
   end
 
   def value_remaining person
    bill_value = self.value_of_person(person)/self.quantity_installments   
-   bill_value * self.installments.after_date_for_count.size.count
+   bill_value * self.installments_pending.size
   end  
 
   def quantity_installments_ok
-    self.quantity_installments - self.installments.after_date_for_count.size.count    
+    self.quantity_installments - self.installments_pending.size
   end
   
   def quantity_installments_remaining
-    self.installments.after_date_for_count.size.count    
+    self.installments_pending.size
   end  
 
   def value_total_remaining
    bill_value = self.value/self.quantity_installments   
-   bill_value * self.installments.after_date_for_count.size.count
+   bill_value * self.installments_pending.size
   end 
 
   def payment

@@ -11,8 +11,8 @@ module ApplicationHelper
     Purchase.purchases_pending.map(&:value_total_remaining).inject(:+)/Setting.limit_card*100
   end
   
-  def define_color_by_percent
-    case get_percent_used
+  def define_color_by_percent(percent)
+    case percent
     when 85..100
       "progress-bar-danger"
     when 33..85
