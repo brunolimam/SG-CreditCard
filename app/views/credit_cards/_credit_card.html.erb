@@ -1,0 +1,15 @@
+<tr id="credit_card_<%= credit_card.id %>">  
+  <td>
+    <label class="fields-show-view"><%= credit_card.display_number %></label>
+  </td> 
+      
+  <td>
+    <%= link_to edit_credit_card_path(credit_card), remote: true do %>
+      <button type="button" class="btn btn-primary">Editar</button>
+    <% end %>
+
+    <%= link_to credit_card, remote: true, method: :delete, data: { confirm: "Tem certeza?" } do %>
+      <button type="button" class="btn btn-danger">Remover</button>
+    <% end %>
+  </td>
+</tr>

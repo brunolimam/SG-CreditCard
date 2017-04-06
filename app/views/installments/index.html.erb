@@ -1,18 +1,42 @@
-<%= link_to "Ver Anteriores", installments_path, class: "btn btn-success fields-show-button" if current_page?(bills_installments_path) && @installments.first.present? && !@installments.first.person.present? %>
-<%= link_to "Ver Atuais", bills_installments_path, class: "btn btn-success fields-show-button" if current_page?(installments_path) %>
+<%= link_to "Ver Anteriores", installments_path, class: "btn btn-success fields-show-button" if params[:after_date].present? %>
+<%= link_to "Ver Atuais", installments_path(after_date: DateTime.now.utc), class: "btn btn-success fields-show-button" if params[:after_date].nil? %>
 
 <table class="table table-striped">
   <thead>
     <tr>
       <th>Data</th>
-      <th>Valor</th>
+		  <% credit_cards = CreditCard.all %>
+    	<% credit_cards.each do |credit_card| %>
+	      <th><%= credit_card.display_number %></th>
+    	<% end %>
     </tr>
   </thead>
 
   <tbody id="installments">
-    <%= render @installments %>
+	  <% @installments.each do |date, installments| %>
+	  	<tr>
+			  <td>
+			    <label class="fields-show-view"><%=  l(date, format: '%B %Y') %></label>
+			  </td>
+
+		  	<% offset_cc||= 0 %>
+
+			  <% installments.group_by{|installment| installment.purchase.credit_card }.sort.each_with_index do |(cc, installments), index| %>
+
+			  	<% if credit_cards[index + offset_cc] != cc %>
+				  	<td><%= link_to number_to_currency(0), "#", :class =>"btn btn-default"%></td>
+						<% offset_cc+=1 %>
+						<% redo %>
+			  	<% end %>
+
+			  	<td><%= link_to number_to_currency(installments.sum(&:value)), details_bills_installments_path(p_day: installments.first.p_day, per_person: true, credit_card_id: cc.id),remote: true, :class =>"btn btn-default"%></td>
+			  <% end %>
+			</tr>
+
+	  <% end %>
+	  <%= render 'total_value' %>
+	  
   </tbody>    
 </table>
 
-<%= render 'total_value' %>
 <%= render 'composer/dialog' %>

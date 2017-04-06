@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   devise_for :users
   resources :people
   resources :settings
+  resources :credit_cards
   
   resources :installments, only: :index do
     collection do

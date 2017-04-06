@@ -1,5 +1,6 @@
 <%= stylesheet_link_tag 'custom' %>
- <%= link_to "Adicionar", new_purchase_path, remote: true, class: "btn btn-success fields-show-button" %>
+<%= javascript_include_tag 'purchases' %>
+<%= link_to "Adicionar", new_purchase_path, remote: true, class: "btn btn-success fields-show-button" %>
 <%= link_to "Simular Compra", purchases_simulate_path, remote: true, class: "btn btn-success fields-show-button" %>
 
 <div class="col-sm-2 navbar-form pull-right">
@@ -7,31 +8,42 @@
 </div>
 <br><br><br>
 
-<%if @value.size >0 %>
+
 <div class="row">
-  <div class="col-md-6">
-    <table class="table table-bordered table-striped table-sm"> 
-      <thead>
-        <th colspan="3">Compras - Total</th>
-        <th colspan="3">Valores - Total</th>
-      </thead>
-      <thead>
-        <th>Pagas</th>
-        <th>Restantes</th>
-        <th>Total</th>
-        <th>Tot Pagas</th>
-        <th>Restantes</th>
-        <th>Total</th>
-      </thead>
-      <td><%=@ok%></td>
-      <td><%=@remaining%></td>
-      <td><%=@all%></td>
-      <td><%=number_to_currency(@value.map(&:value).inject(:+)-@value_remaining)%></td>
-      <td><%=number_to_currency(@value_remaining)%></td>
-      <td><%=number_to_currency(@value.map(&:value).inject(:+))%></td>
-    </table>
-  </div>  
+  <div class="col-md-2">
+    <%= select_tag "type_search", options_for_select(CreditCard.all.map{|cc| [cc.display_number, cc.id]}, selected: params[:credit_card_id]), class: "form-control fields-show-view", id: "select-cc" %>
+  </div>
+</div>
+
+<br/>
+
+<%if @value.size >0 %>
+  <div class="row">
+    <div class="col-md-6">
+      <table class="table table-bordered table-striped table-sm"> 
+        <thead>
+          <th colspan="3">Compras - Total</th>
+          <th colspan="3">Valores - Total</th>
+        </thead>
+        <thead>
+          <th>Pagas</th>
+          <th>Restantes</th>
+          <th>Total</th>
+          <th>Tot Pagas</th>
+          <th>Restantes</th>
+          <th>Total</th>
+        </thead>
+        <td><%=@ok%></td>
+        <td><%=@remaining%></td>
+        <td><%=@all%></td>
+        <td><%=number_to_currency(@value.map(&:value).inject(0, :+)-@value_remaining)%></td>
+        <td><%=number_to_currency(@value_remaining)%></td>
+        <td><%=number_to_currency(@value.map(&:value).inject(0, :+))%></td>
+      </table>
+    </div>  
+  </div>
 <% end %>
+
 
 <table class="table table-striped">
   <thead>

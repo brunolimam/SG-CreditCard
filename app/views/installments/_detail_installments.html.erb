@@ -16,7 +16,7 @@
       <label class="fields-show-view"><%= installment.purchase.place_name if installment.purchase.present? %></label>
     </td>
     <td>
-      <%= link_to "Visualizar", details_bill_per_person_installments_path(p_day: installment.p_day, person_id: installment.person.id),remote:true, :class =>"btn btn-default" %>
+      <%= link_to "Visualizar", details_bill_per_person_installments_path(p_day: installment.p_day, person_id: installment.person.id, credit_card_id: params[:credit_card_id]),remote:true, :class =>"btn btn-default" %>
     </td>
   </tr>
 <% end %>

@@ -11,10 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161218160441) do
+ActiveRecord::Schema.define(version: 20170406040637) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "credit_cards", force: :cascade do |t|
+    t.string   "display_number"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.integer  "limit"
+  end
 
   create_table "installments", force: :cascade do |t|
     t.datetime "p_day"
@@ -39,9 +46,11 @@ ActiveRecord::Schema.define(version: 20161218160441) do
     t.float    "value"
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
-    t.boolean  "fixed"
     t.text     "describe"
+    t.integer  "credit_card_id"
   end
+
+  add_index "purchases", ["credit_card_id"], name: "index_purchases_on_credit_card_id", using: :btree
 
   create_table "settings", force: :cascade do |t|
     t.string   "parameter"
@@ -69,4 +78,5 @@ ActiveRecord::Schema.define(version: 20161218160441) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "purchases", "credit_cards"
 end

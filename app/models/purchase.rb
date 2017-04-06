@@ -5,6 +5,8 @@ class Purchase < ActiveRecord::Base
 
   has_many :people, -> { uniq }, through: :installments
 
+  belongs_to :credit_card
+
 
   scope :find_purchaser, ->(search) {
     joins('INNER JOIN installments i on i.purchase_id = purchases.id').joins('INNER JOIN people pp on i.person_id = pp.id').where("pp.name ILIKE ?", "%"+search+"%").uniq

@@ -1,16 +1,16 @@
-<h4><%= l(@installments.first.p_day, format: '%B %Y')%></h4>
+<h4><%= @credit_card.display_number + " - " + l(@installments.first.p_day, format: '%B %Y')%></h4>
 
 <div class="row">
   <div class="col-md-3">
-  <%= link_to details_bills_installments_path(p_day: @installments.first.p_day, per_person: true),remote: true, :class =>"btn btn-default" do %>
+  <%= link_to details_bills_installments_path(p_day: @installments.first.p_day, per_person: true, credit_card_id: params[:credit_card_id]),remote: true, :class =>"btn btn-default" do %>
  <i class="glyphicon glyphicon-list-alt"></i>
 <% end %>
-    <% prev_disabled = "disabled" if !Installment.has_prev_for_person?(@installments.first.p_day,@installments.first.person.id) %>
-    <%= link_to details_bill_per_person_installments_path(p_day: @installments.first.p_day-1.month, person_id: @installments.first.person.id),remote:true, :class =>"btn btn-primary #{prev_disabled}"  do %>  
+    <% prev_disabled = "disabled" if !Installment.has_prev_for_person?(@credit_card, @installments.first.p_day,@installments.first.person.id) %>
+    <%= link_to details_bill_per_person_installments_path(p_day: @installments.first.p_day-1.month, person_id: @installments.first.person.id, credit_card_id: params[:credit_card_id]),remote:true, :class =>"btn btn-primary #{prev_disabled}"  do %>  
       <i class="glyphicon glyphicon-circle-arrow-left"></i>
     <% end %>
-    <% next_disabled = "disabled" if !Installment.has_next_for_person?(@installments.first.p_day,@installments.first.person.id) %>
-    <%= link_to details_bill_per_person_installments_path(p_day: @installments.first.p_day+1.month, person_id: @installments.first.person.id),remote:true, :class =>"btn btn-primary #{next_disabled}"  do %>  
+    <% next_disabled = "disabled" if !Installment.has_next_for_person?(@credit_card, @installments.first.p_day,@installments.first.person.id) %>
+    <%= link_to details_bill_per_person_installments_path(p_day: @installments.first.p_day+1.month, person_id: @installments.first.person.id, credit_card_id: params[:credit_card_id]),remote:true, :class =>"btn btn-primary #{next_disabled}"  do %>  
       <i class="glyphicon glyphicon-circle-arrow-right"></i>
     <% end %>
   </div>  

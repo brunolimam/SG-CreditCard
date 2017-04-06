@@ -7,8 +7,8 @@ module ApplicationHelper
   end
   end
 
-  def get_percent_used
-    Purchase.purchases_pending.map(&:value_total_remaining).inject(:+)/Setting.limit_card*100
+  def get_percent_used credit_card
+    credit_card.purchases.purchases_pending.map(&:value_total_remaining).inject(0, :+)/credit_card.limit*100
   end
   
   def define_color_by_percent(percent)

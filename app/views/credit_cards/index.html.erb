@@ -1,0 +1,16 @@
+ <%= link_to "Adicionar", new_credit_card_path, remote: true, class: "btn btn-success fields-show-button" %>
+
+<table class="table table-striped">
+  <thead>
+    <tr>           
+      <th>Numero</th>
+      <th>Ação</th>                
+    </tr>
+  </thead>
+
+  <tbody id="credit_cards">
+    <%= render @credit_cards %>
+  </tbody>    
+</table>
+
+<%= render 'composer/dialog' %>

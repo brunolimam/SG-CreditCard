@@ -1,11 +1,11 @@
 class PurchasesController < ApplicationController
   before_action :set_purchase, only: [:show, :edit, :update, :destroy, :details]
-  before_action :prepare_purchases,:totalize_quantity,:totalize_values, only: [:index]
+  before_action :set_credit_card, :prepare_purchases,:totalize_quantity,:totalize_values, only: [:index]
   autocomplete :person, :name, :full => true
   autocomplete :purchase, :place_name, :full => true, :uniq => true
 
   def index
-    @purchases = @purchases.includes(:installments).paginate(:page => params[:page], :per_page => 20)
+    @purchases = @credit_card.purchases.order(purchased_in: :desc).includes(:installments).paginate(:page => params[:page], :per_page => 20)
   end
 
   def details     
@@ -79,9 +79,10 @@ class PurchasesController < ApplicationController
     def set_purchase
       @purchase = Purchase.find(params[:id])
     end
+
     def get_all_ok      
       all_ok = []
-      Purchase.all.each do |purchase|
+      Purchase.all.includes(:installments).each do |purchase|
         if purchase.installments.last.p_day <= DateTime.now.utc
           all_ok << purchase
         end
@@ -102,8 +103,9 @@ class PurchasesController < ApplicationController
     end
 
     def totalize_quantity
-      @all = Purchase.count
-      @remaining = Purchase.purchases_pending.size
+      purchases = @credit_card.purchases
+      @all = purchases.count
+      @remaining = purchases.purchases_pending.size
       @ok = @all-@remaining
 
       @all_for_search = @purchases.size
@@ -121,13 +123,23 @@ class PurchasesController < ApplicationController
 
 
     def totalize_values
-      @value = Purchase.all
-      @value_remaining = Purchase.purchases_pending.map(&:value_total_remaining).inject(:+)      
+      purchases = @credit_card.purchases
+
+      @value = purchases
+      @value_remaining = purchases.purchases_pending.map(&:value_total_remaining).inject(0, :+)      
       @value_for_search = @purchases
-      @value_remaining_for_search = @purchases.purchases_pending.map(&:value_total_remaining).inject(:+)     
+      @value_remaining_for_search = @purchases.purchases_pending.map(&:value_total_remaining).inject(0, :+)     
     end    
 
     def purchase_params
-      params.require(:purchase).permit(:purchased_in, :quantity_installments, :place_name, :value, :describe)
+      params.require(:purchase).permit(:purchased_in, :quantity_installments, :place_name, :value, :describe, :credit_card_id)
     end 
+
+    def set_credit_card
+      if params[:credit_card_id].present?
+        @credit_card = CreditCard.find(params[:credit_card_id])
+      else
+        @credit_card = CreditCard.first
+      end
+    end
 end

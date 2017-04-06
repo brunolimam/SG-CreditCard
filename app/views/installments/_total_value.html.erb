@@ -1,6 +1,22 @@
-<% if @installments.first.present?
+<% if @installments.instance_of? Array %>
+	<tr>
+	  <td>
+	    <label class="fields-show-view">Total</label>
+	  </td>
+	  <% @installments_per_cc.each do |cc, installments| %>
+	  	<td><div class="btn btn-default"><%= number_to_currency(installments.sum(&:value)) %></div></td>
+	  <% end %>
+
+	</tr>
+	
+<% else %>
+	<% if @installments.first.present?
     sum_value =  @installments.first.attributes.key?('total_value') ? @installments.map(&:total_value) : @installments.map(&:value)
     sum_value = sum_value.inject(:+)
   end
  %>
-<div class="alert alert-info" role="alert">Total: <%= number_to_currency(sum_value) %></div>
+
+ <div class="alert alert-info" role="alert">Total: <%= number_to_currency(sum_value || 0) %></div>
+<% end %>
+
+

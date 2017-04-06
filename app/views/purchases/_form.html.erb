@@ -35,6 +35,14 @@
 
   <div class="row">
     <div class="col-md-5">    
+      <label class="field">Cartão</label>
+      <br>
+        <%= f.collection_select :credit_card_id, CreditCard.all, :id, :display_number, {}, {class:"form-control fields-show-view"} %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-5">    
       <label class="field">Numero de parcelas</label>
       <br>
        <%= f.number_field :quantity_installments,:class => "form-control input-md",:maxlength => 150 %> 
