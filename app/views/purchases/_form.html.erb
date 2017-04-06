@@ -37,7 +37,7 @@
     <div class="col-md-5">    
       <label class="field">Cartão</label>
       <br>
-        <%= f.collection_select :credit_card_id, CreditCard.all, :id, :display_number, {}, {class:"form-control fields-show-view"} %>
+        <%= f.collection_select :credit_card_id, CreditCard.order(display_number: :asc).all, :id, :display_number, {}, {class:"form-control fields-show-view"} %>
     </div>
   </div>
 

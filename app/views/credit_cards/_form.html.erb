@@ -15,6 +15,20 @@
      <%= f.text_field :limit,:class => "form-control input-md",:maxlength => 150 %> 
     </div>
   </div>
+  
+  <div class="row">
+    <div class="col-md-5">    
+     <label class="field">Dia de fechamento de fatura</label>
+     <%= f.text_field :close_day,:class => "form-control input-md", :maxlength => 2 %> 
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-5">    
+     <label class="field">Dia de vencimento da Fatura</label>
+     <%= f.text_field :p_day,:class => "form-control input-md",:maxlength => 2 %> 
+    </div>
+  </div>
 
   <div class="actions">
     <%= f.submit "Salvar", :class=>"btn btn-success" %>

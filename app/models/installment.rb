@@ -3,7 +3,7 @@ class Installment < ActiveRecord::Base
   belongs_to :purchase
 
   scope :per_month, -> {
-    all.includes(purchase: :credit_card).group_by {|installment| installment.p_day}.sort
+    all.includes(purchase: :credit_card).group_by {|installment| installment.p_day.strftime('%Y/%m') }.sort
   }  
 
   scope :per_credit_card, -> {
@@ -11,7 +11,7 @@ class Installment < ActiveRecord::Base
   }  
 
   scope :after_date, ->(date) {
-    where("p_day >= ?", date)
+    where("p_day >= ?", date).order(p_day: :asc)
   }
 
   scope :after_date_for_count, -> {

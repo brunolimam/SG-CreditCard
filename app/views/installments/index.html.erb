@@ -1,11 +1,11 @@
 <%= link_to "Ver Anteriores", installments_path, class: "btn btn-success fields-show-button" if params[:after_date].present? %>
-<%= link_to "Ver Atuais", installments_path(after_date: DateTime.now.utc), class: "btn btn-success fields-show-button" if params[:after_date].nil? %>
+<%= link_to "Ver Atuais", installments_path(after_date: DateTime.now.utc.beginning_of_month), class: "btn btn-success fields-show-button" if params[:after_date].nil? %>
 
 <table class="table table-striped">
   <thead>
     <tr>
       <th>Data</th>
-		  <% credit_cards = CreditCard.all %>
+		  <% credit_cards = CreditCard.order(:display_number) %>
     	<% credit_cards.each do |credit_card| %>
 	      <th><%= credit_card.display_number %></th>
     	<% end %>
@@ -16,7 +16,7 @@
 	  <% @installments.each do |date, installments| %>
 	  	<tr>
 			  <td>
-			    <label class="fields-show-view"><%=  l(date, format: '%B %Y') %></label>
+			    <label class="fields-show-view"><%= date %></label>
 			  </td>
 
 		  	<% offset_cc||= 0 %>

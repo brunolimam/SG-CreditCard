@@ -1,6 +1,6 @@
 class Purchase < ActiveRecord::Base
   include ActionView::Helpers::NumberHelper
-  has_many :installments
+  has_many :installments, dependent: :destroy
   has_many :installments_pending, -> { after_date_for_count }, class_name: 'Installment'
 
   has_many :people, -> { uniq }, through: :installments
@@ -34,7 +34,7 @@ class Purchase < ActiveRecord::Base
     people = people.sort_by { |h| h[:id] }
 
     p_days = []
-    p_days << next_day_of_date(self.purchased_in, Setting.closing_day)
+    p_days << next_day_of_date(self.purchased_in, credit_card.close_day)
 
     (self.quantity_installments-1).times do 
       p_days << p_days.last+1.month
@@ -95,6 +95,6 @@ class Purchase < ActiveRecord::Base
       date = date+1.month
       date = date+1.month if offset_day<=0
       
-      DateTime.parse("#{date.year}/#{date.month}/#{Setting.payment_day}").utc
+      DateTime.parse("#{date.year}/#{date.month}/#{credit_card.p_day}").utc
     end
 end

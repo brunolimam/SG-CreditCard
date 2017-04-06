@@ -11,7 +11,7 @@
 
 <div class="row">
   <div class="col-md-2">
-    <%= select_tag "type_search", options_for_select(CreditCard.all.map{|cc| [cc.display_number, cc.id]}, selected: params[:credit_card_id]), class: "form-control fields-show-view", id: "select-cc" %>
+    <%= select_tag "type_search", options_for_select(CreditCard.order(display_number: :asc).all.map{|cc| [cc.display_number, cc.id]}, selected: params[:credit_card_id]), class: "form-control fields-show-view", id: "select-cc" %>
   </div>
 </div>
 
