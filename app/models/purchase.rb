@@ -34,7 +34,7 @@ class Purchase < ActiveRecord::Base
     people = people.sort_by { |h| h[:id] }
 
     p_days = []
-    p_days << next_day_of_date(self.purchased_in, credit_card.close_day)
+    p_days << next_day_of_date
 
     (self.quantity_installments-1).times do 
       p_days << p_days.last+1.month
@@ -88,13 +88,19 @@ class Purchase < ActiveRecord::Base
     "#{quantity_installments} x #{number_to_currency(bill_value)}"
   end  
 
-  private
-    def next_day_of_date(date, close_bill_day)
-      offset_day = close_bill_day-date.day
+  def next_day_of_date date= nil
+    date = date || self.purchased_in
+    offset_day = credit_card.close_day-date.day
 
-      date = date+1.month
-      date = date+1.month if offset_day<=0
-      
-      DateTime.parse("#{date.year}/#{date.month}/#{credit_card.p_day}").utc
+
+    if credit_card.close_day-credit_card.p_day > 0
+      date = date+1.month 
     end
+
+    if offset_day<=0
+      date = date+1.month 
+    end
+    
+    DateTime.parse("#{date.year}/#{date.month}/#{credit_card.p_day}").utc
+  end
 end
