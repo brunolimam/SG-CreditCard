@@ -3,7 +3,7 @@
 	  <td>
 	    <label class="fields-show-view">Total</label>
 	  </td>
-	  <% @installments_per_cc.each do |cc, installments| %>
+	  <% @installments_per_cc.sort_by{|cc, installments| cc.display_number}.each do |cc, installments| %>
 	  	<td><div class="btn btn-default"><%= number_to_currency(installments.sum(&:value)) %></div></td>
 	  <% end %>
 

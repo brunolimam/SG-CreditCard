@@ -21,7 +21,8 @@
 
 		  	<% offset_cc||= 0 %>
 
-			  <% installments.group_by{|installment| installment.purchase.credit_card }.sort.each_with_index do |(cc, installments), index| %>
+			  <% installments.group_by{|installment| installment.purchase.credit_card }.sort_by{|cc, installments| cc.display_number}.each_with_index do |(cc, installments), index| %>
+
 
 			  	<% if credit_cards[index + offset_cc] != cc %>
 				  	<td><%= link_to number_to_currency(0), "#", :class =>"btn btn-default"%></td>
