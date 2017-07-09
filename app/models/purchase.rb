@@ -74,6 +74,14 @@ class Purchase < ActiveRecord::Base
     self.installments_pending.size
   end  
 
+  def current_installment
+    if self.quantity_installments_remaining<self.quantity_installments.size 
+      self.quantity_installments_ok+1 
+    else
+      self.quantity_installments.size
+    end
+  end
+
   def value_total_remaining
    bill_value = self.value/self.quantity_installments   
    bill_value * self.installments_pending.size

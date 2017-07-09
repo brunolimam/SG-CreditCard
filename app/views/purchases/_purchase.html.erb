@@ -14,6 +14,11 @@
   </td>
   <td>
     <label class="fields-show-view"><%= purchase.place_name %></label>
+      <% if !purchase.paid? %>
+        <label class="fields-show-view">
+          <%= "#{purchase.current_installment}/#{purchase.quantity_installments}" %>
+        </label>
+      <%end%>
   </td> 
   <td>
     <label class="fields-show-view"><%= number_to_currency(purchase.value) %></label>
