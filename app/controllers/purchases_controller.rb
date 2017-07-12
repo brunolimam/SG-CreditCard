@@ -1,12 +1,16 @@
 class PurchasesController < ApplicationController
   before_action :set_purchase, only: [:show, :edit, :update, :destroy, :details]
   before_action :set_credit_card, :prepare_purchases,:totalize_quantity,:totalize_values, only: [:index]
-  autocomplete :person, :name, :full => true
-  autocomplete :purchase, :place_name, :full => true, :uniq => true
+  autocomplete :person, :name, :full => true 
 
-  def index
-    #@purchases = @credit_card.purchases.order(purchased_in: :desc).includes(:installments).paginate(:page => params[:page], :per_page => 20)
+  def index    
   end
+
+  def autocomplete_purchase_place_name
+    term = params[:term]            
+    places = Purchase.select(:place_name).uniq.where('place_name ILIKE ?', "%#{term}%").order(:place_name)
+    render :json => places.map { |place| {:id => place.place_name, :label => place.place_name, :value => place.place_name, :place_name => place.place_name} }
+  end  
 
   def details     
   end
