@@ -5,7 +5,7 @@ class PurchasesController < ApplicationController
   autocomplete :purchase, :place_name, :full => true, :uniq => true
 
   def index
-    @purchases = @credit_card.purchases.order(purchased_in: :desc).includes(:installments).paginate(:page => params[:page], :per_page => 20)
+    #@purchases = @credit_card.purchases.order(purchased_in: :desc).includes(:installments).paginate(:page => params[:page], :per_page => 20)
   end
 
   def details     
@@ -83,27 +83,29 @@ class PurchasesController < ApplicationController
     def get_all_ok      
       all_ok = []
       Purchase.all.includes(:installments).each do |purchase|
-        if purchase.installments.last.p_day <= DateTime.now.utc
+        if purchase.installments.last.p_day <= DateTime.now.utc          
           all_ok << purchase
         end
-      end
+      end      
       return all_ok
     end
 
     def prepare_purchases
       type_search = params[:type_search]
-      search = params[:search]
-      @search = Purchase.all.order(purchased_in: :desc)
+      search = params[:search]            
+      @search = @credit_card.purchases      
       @search = @search.purchases_pending if check_if_true(params[:remaining])
       @search = @search.where('purchases.id in (?)',get_all_ok) if check_if_true(params[:ok])
       @search = @search.find_purchaser(search) if type_search == 'name'
       @search = @search.where(type_search+" ILIKE ?", "%"+search+"%") if type_search.present? and type_search != 'name'      
-      @search = @search.search(params[:q])
-      @purchases = @search.result
+      @search = @search.search(params[:q])            
+      @purchases = @search.result.paginate(:page => params[:page], :per_page => 20)
+      @purchases = @credit_card.purchases.purchases_pending.paginate(:page => params[:page], :per_page => 20) if check_if_true(params[:remaining])
+      @purchases = @credit_card.purchases.where('purchases.id in (?)',@search.result.ids).paginate(:page => params[:page], :per_page => 20) if check_if_true(params[:ok])
     end
 
     def totalize_quantity
-      purchases = @credit_card.purchases
+      purchases = @purchases
       @all = purchases.count
       @remaining = purchases.purchases_pending.size
       @ok = @all-@remaining
@@ -123,7 +125,7 @@ class PurchasesController < ApplicationController
 
 
     def totalize_values
-      purchases = @credit_card.purchases
+      purchases = @purchases
 
       @value = purchases
       @value_remaining = purchases.purchases_pending.map(&:value_total_remaining).inject(0, :+)      

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170406153454) do
+ActiveRecord::Schema.define(version: 20170712144519) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20170406153454) do
     t.integer  "limit"
     t.integer  "close_day"
     t.integer  "p_day"
+    t.integer  "financial"
   end
 
   create_table "installments", force: :cascade do |t|

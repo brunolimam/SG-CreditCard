@@ -1,6 +1,7 @@
 <tr id="credit_card_<%= credit_card.id %>">  
   <td>
     <label class="fields-show-view"><%= credit_card.display_number %></label>
+    <%=image_tag credit_card.financial == 1 ? "credicard.png" : "nubank.jpg",size: "35" %>
   </td> 
       
   <td>

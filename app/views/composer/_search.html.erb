@@ -1,5 +1,7 @@
 <%= form_tag(path, :method => "get", id: "search-form", class: "navbar-form") do %>
   
+  <%= hidden_field_tag "credit_card_id", params[:credit_card_id] %>
+
   <div class="input-group">
       <div class="checkbox">
          <label>

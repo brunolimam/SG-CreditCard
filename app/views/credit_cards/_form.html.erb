@@ -30,6 +30,22 @@
     </div>
   </div>
 
+<div class="row">
+  <div class="col-md-5">
+     <label class="field">Operadora</label>
+    <select name="credit_card[financial]" id="credit_card_financial" class="form-control">
+        <option value="1">Credicard</option>
+        <% if @credit_card.financial == 2%>
+          <option value="2" selected="selected">Nubank</option>        
+        <%else%>        
+          <option value="2">Nubank</option>        
+        <%end%>
+    </select>
+  </div>
+</div>
+
+<br>
+<br>
   <div class="actions">
     <%= f.submit "Salvar", :class=>"btn btn-success" %>
   </div>

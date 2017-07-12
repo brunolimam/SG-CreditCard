@@ -3,11 +3,16 @@
     <label class="fields-show-view"><%= person.name %></label>
   </td> 
   <td>
-    <label class="fields-show-view"><%= number_to_currency person.installments.map(&:value).inject(:+) %></label>
+    <label class="fields-show-view"><%= number_to_currency person.installments.map(&:value).inject(:+)-person.installments_for_pay.map(&:value).inject(:+) %></label>
   </td>
   <td>
     <label class="fields-show-view"><%= number_to_currency person.installments_for_pay_in_month.map(&:value).inject(:+) %></label>
   </td>
+
+  <td>
+    <label class="fields-show-view"><%=number_to_currency person.installments_for_pay.map(&:value).inject(:+)-person.installments_for_pay_in_month.map(&:value).inject(:+) %></label>
+  </td>
+
   <td>
     <label class="fields-show-view"><%= number_to_currency person.installments_for_pay.map(&:value).inject(:+) %></label>
   </td>
