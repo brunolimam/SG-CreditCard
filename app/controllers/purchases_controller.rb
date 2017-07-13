@@ -96,16 +96,20 @@ class PurchasesController < ApplicationController
 
     def prepare_purchases
       type_search = params[:type_search]
-      search = params[:search]            
+      search = params[:search]        
+      
       @search = @credit_card.purchases      
+      @search = Purchase.all if params[:credit_card_id].to_i == 0
       @search = @search.purchases_pending if check_if_true(params[:remaining])
       @search = @search.where('purchases.id in (?)',get_all_ok) if check_if_true(params[:ok])
       @search = @search.find_purchaser(search) if type_search == 'name'
       @search = @search.where(type_search+" ILIKE ?", "%"+search+"%") if type_search.present? and type_search != 'name'      
+      @filter = @search
       @search = @search.search(params[:q])            
+
       @purchases = @search.result.paginate(:page => params[:page], :per_page => 20)
-      @purchases = @credit_card.purchases.purchases_pending.paginate(:page => params[:page], :per_page => 20) if check_if_true(params[:remaining])
-      @purchases = @credit_card.purchases.where('purchases.id in (?)',@search.result.ids).paginate(:page => params[:page], :per_page => 20) if check_if_true(params[:ok])
+      @purchases = @filter.purchases_pending.paginate(:page => params[:page], :per_page => 20) if check_if_true(params[:remaining])
+      @purchases = @filter.where('purchases.id in (?)',@search.result.ids).paginate(:page => params[:page], :per_page => 20) if check_if_true(params[:ok])
     end
 
     def totalize_quantity
@@ -142,7 +146,7 @@ class PurchasesController < ApplicationController
     end 
 
     def set_credit_card
-      if params[:credit_card_id].present?
+      if params[:credit_card_id].present? and params[:credit_card_id].to_i != 0
         @credit_card = CreditCard.find(params[:credit_card_id])
       else
         @credit_card = CreditCard.first

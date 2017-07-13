@@ -11,6 +11,10 @@ module ApplicationHelper
     credit_card.purchases.purchases_pending.map(&:value_total_remaining).inject(0, :+)/credit_card.limit*100
   end
   
+  def get_percent_used_all
+    Purchase.purchases_pending.map(&:value_total_remaining).inject(0, :+)/CreditCard.all.map(&:limit).inject(0, :+)*100
+  end
+
   def define_color_by_percent(percent)
     case percent
     when 85..100

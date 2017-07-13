@@ -2,20 +2,20 @@
 <%= javascript_include_tag 'purchases' %>
 <%= link_to "Adicionar", new_purchase_path, remote: true, class: "btn btn-success fields-show-button" %>
 <%= link_to "Simular Compra", purchases_simulate_path, remote: true, class: "btn btn-success fields-show-button" %>
+  <div class="col-md-2">
+    <%a=CreditCard.all.map{|cc| [cc.display_number, cc.id]}%>
+    <%a<<["Todos",0]%>
+    <%= select_tag "type_search", options_for_select(a, selected: params[:credit_card_id]), class: "form-control fields-show-view", id: "select-cc" %>
+  </div>
 
 <div class="col-sm-2 navbar-form pull-right">
       <%= render "composer/search", path: purchases_path%>
 </div>
 <br><br><br>
 
-
-<div class="row">
-  <div class="col-md-2">
-    <%= select_tag "type_search", options_for_select(CreditCard.order(display_number: :asc).all.map{|cc| [cc.display_number, cc.id]}, selected: params[:credit_card_id]), class: "form-control fields-show-view", id: "select-cc" %>
-  </div>
-</div>
-
-<br/>
+<% if params[:credit_card_id].to_i != 0 %> 
+  <h4><%= CreditCard.find(params[:credit_card_id]).display_number %></h4>
+<%end%>
 
 <%if @value.size >0 %>
   <div class="row">
@@ -48,6 +48,7 @@
 <table class="table table-striped">
   <thead>
     <tr>      
+      <% if params[:credit_card_id].to_i == 0%><th><label class="section">Cartão</label></th><%end%>
       <th><label class="section"><%= sort_link @search, :id, "Código" %></label></th>
       <th><label class="section"><%= sort_link @search, :purchased_in, "Data" %></label></th>
       <th><label class="section"><%= sort_link @search, :place_name, "Estabelecimento" %></label></th>      
