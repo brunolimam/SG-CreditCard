@@ -2,7 +2,7 @@
 <% if params[:credit_card_id].to_i == 0%>
 <td>
   <label class="section">
-  <%=image_tag CreditCard.find(purchase.credit_card_id).financial == 1 ? "credicard.png" : "nubank.jpg",size: "35" %><SMALL><%= CreditCard.find(purchase.credit_card_id).display_number %></SMALL>
+  <%=image_tag CreditCard.find(purchase.credit_card_id).financial == 1 ? "credicard.png" : "nubank.jpg",size: "35" %><SMALL>  <%= CreditCard.find(purchase.credit_card_id).display_number %></SMALL>
   </label>
 </td>
 <%end%>

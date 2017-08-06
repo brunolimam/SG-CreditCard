@@ -1,5 +1,5 @@
 class PeopleController < ApplicationController
-  before_action :set_person, only: [:show, :edit, :update, :destroy]
+  before_action :set_person, only: [:show, :edit, :update, :destroy, :installments]
 
   def index
     @search = Person.all.order(:name).includes(:installments, :installments_for_pay)
@@ -31,6 +31,10 @@ class PeopleController < ApplicationController
 
   def show
   end
+
+  def installments
+    
+  end  
 
   def edit
   end

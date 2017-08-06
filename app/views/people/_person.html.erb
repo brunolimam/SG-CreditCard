@@ -17,7 +17,12 @@
     </label>
   </td>  
       
+
   <td>
+    <%= link_to installments_person_path(person), remote: true do %>
+      <button type="button" class="btn btn-default">Faturas</button>
+    <% end %>
+
     <%= link_to edit_person_path(person), remote: true do %>
       <button type="button" class="btn btn-primary">Editar</button>
     <% end %>

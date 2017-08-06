@@ -1,0 +1,18 @@
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>Mês</th>
+			<th>Valor</th>
+		</tr>
+	</thead>
+	<tbody id="installments">
+		<% @person.next_purchases_values.each do |p,value| %>
+			<tr>
+				<td><%=p%></td>
+				<td><%=number_to_currency value%></td>
+			</tr>
+		<%end%>
+	</tbody>    
+</table>
+
+<div class="alert alert-info" role="alert">Total: <%= number_to_currency(@person.value_remaining || 0) %></div>

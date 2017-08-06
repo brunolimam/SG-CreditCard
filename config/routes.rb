@@ -15,7 +15,11 @@ Rails.application.routes.draw do
 
 
   devise_for :users
-  resources :people
+  resources :people do
+    member do
+      get :installments
+    end
+  end
   resources :settings
   resources :credit_cards
   

@@ -98,8 +98,8 @@ class PurchasesController < ApplicationController
       type_search = params[:type_search]
       search = params[:search]        
       
-      @search = @credit_card.purchases      
-      @search = Purchase.all if params[:credit_card_id].to_i == 0
+      @search = @credit_card.purchases.order(purchased_in: :desc)    
+      @search = Purchase.order(purchased_in: :desc) if params[:credit_card_id].to_i == 0
       @search = @search.purchases_pending if check_if_true(params[:remaining])
       @search = @search.where('purchases.id in (?)',get_all_ok) if check_if_true(params[:ok])
       @search = @search.find_purchaser(search) if type_search == 'name'
